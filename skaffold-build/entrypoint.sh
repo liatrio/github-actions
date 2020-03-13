@@ -1,5 +1,5 @@
 #!/bin/sh -l
-
+set -e
 if [ -z "$1" ]
 then
   skaffold config set --global local-cluster true
