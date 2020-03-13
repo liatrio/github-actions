@@ -31,7 +31,7 @@ jobs:
 # skaffold-build
 Run `skaffold build` in your current repository.  Options:
 
-* **push** set to `true` if you'd like to push images that were created (Default: true)
+* **default_repo** Repo to push to.  Set to '' to skip pushing (Default: '')
 
 ```
     - name: Skaffold Build

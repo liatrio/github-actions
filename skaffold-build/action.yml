@@ -1,9 +1,9 @@
 name: 'Skaffold'
 description: 'Run Skaffold'
 inputs:
-  push:
-    default: "true"
-    description: 'Push images'
+  default_repo:
+    default: ""
+    description: 'Repo to push images to or empty string to disable push'
     required: false
 runs:
   using: 'docker'
