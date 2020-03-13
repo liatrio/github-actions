@@ -1,0 +1,21 @@
+name: 'Gitty Up'
+description: 'Run gitty-up'
+inputs:
+  url:
+    description: 'URL of git repo to push a change to'
+    required: true
+  username:
+    description: 'Username for pushing to url'
+    required: true
+  password:
+    description: 'Password for pushing to url'
+    required: true
+  file:
+    description: 'Path to file that needs to be updated'
+    required: true
+  values:
+    description: 'Values to apply to repo-file'
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'

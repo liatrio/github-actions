@@ -9,6 +9,10 @@ inputs:
     default: "true"
     description: 'Create ECR repos automatically.'
     required: false
+  push:
+    default: "true"
+    description: 'Push images'
+    required: false
 runs:
   using: 'docker'
   image: 'Dockerfile'

@@ -29,7 +29,7 @@ def ecr_policy():
 def main():
   client = boto3.client('ecr')
   with open(r'skaffold.yaml') as file:
-    skaffold = yaml.load(file)
+    skaffold = yaml.load(file, Loader=yaml.FullLoader)
     for artifact in skaffold['build']['artifacts']: 
       try:
         client.create_repository(
