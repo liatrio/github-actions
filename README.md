@@ -1,6 +1,6 @@
 This repo contains a collection of GitHub Actions:
 
-# ECR
+# ecr
 Login and setup ECR.  Supports following inputs
 
 * **login** set to `true` if you'd like to login to ECR (Default: true)
@@ -38,7 +38,7 @@ Run `skaffold build` in your current repository.  Options:
       uses: ./.github/actions/skaffold
 ```
 
-# Gitty-Up
+# gitty-up
 Run `gitty-up` in your current repository.  Options:
 
 * **url** the Git URL to push to
@@ -65,7 +65,7 @@ jobs:
         values: inputs.sdm_version=1.3.16
 ```
 
-# Git Extras
+# git-extra
 Get extra information about current git repo.  Creates following outputs:
 
 * **version** determined by `git describe`

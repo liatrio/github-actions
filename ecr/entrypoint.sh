@@ -1,12 +1,12 @@
 #!/bin/sh -l
 set -e
 
-if [ $INPUT_LOGIN= "true" ]
+if [ "$INPUT_LOGIN" = "true" ]
 then
   $(aws ecr get-login --no-include-email)
 fi
 
-if [ $INPUT_CREATE_REPOS = "true" ]
+if [ "$INPUT_CREATE_REPOS" = "true" ]
 then
   /create-repos.py
 fi
