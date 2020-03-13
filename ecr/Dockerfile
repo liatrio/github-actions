@@ -1,4 +1,4 @@
-FROM docker:18.06
+FROM docker:18.09
 
 RUN apk update && \
 apk -Uuv add python py-pip && \
