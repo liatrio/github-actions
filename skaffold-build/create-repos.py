@@ -1,7 +1,30 @@
 #!/usr/bin/env python3
 import yaml
+import json
 import boto3
 from botocore.exceptions import ClientError
+
+def ecr_policy():
+  policy = {
+    "Version": "2008-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Principal": "*",
+        "Action": [
+          "ecr:BatchCheckLayerAvailability",
+          "ecr:BatchGetImage",
+          "ecr:DescribeImages",
+          "ecr:DescribeRepositories",
+          "ecr:GetDownloadUrlForLayer",
+          "ecr:ListImages"
+        ]
+      }
+    ]
+  }
+
+  return policy
+
 
 def main():
   client = boto3.client('ecr')
@@ -17,6 +40,11 @@ def main():
           pass
         else:
           raise(e)
+
+      client.set_repository_policy(
+        repositoryName=artifact['image'],
+        policyText=json.dumps(ecr_policy())
+      )
 
 if __name__ == "__main__":
   main()
