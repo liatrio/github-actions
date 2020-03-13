@@ -31,14 +31,15 @@ def main():
   with open(r'skaffold.yaml') as file:
     skaffold = yaml.load(file, Loader=yaml.FullLoader)
     for artifact in skaffold['build']['artifacts']: 
+      repo = artifact['image']
       try:
         client.create_repository(
-          repositoryName=artifact['image']
+          repositoryName=repo
         )
-        print(f'Created new repository "{artifact['image']}"')
+        print("Created new repository '{}'".format(repo))
       except ClientError as e:
         if e.response['Error']['Code'] == 'RepositoryAlreadyExistsException':
-          print(f'Repository "{artifact['image']}" already existed.')
+          print("Repository '{}' already existed.".format(repo))
           pass
         else:
           raise(e)
