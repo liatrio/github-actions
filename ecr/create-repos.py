@@ -35,8 +35,10 @@ def main():
         client.create_repository(
           repositoryName=artifact['image']
         )
+        print(f'Created new repository "{artifact['image']}"')
       except ClientError as e:
         if e.response['Error']['Code'] == 'RepositoryAlreadyExistsException':
+          print(f'Repository "{artifact['image']}" already existed.')
           pass
         else:
           raise(e)
