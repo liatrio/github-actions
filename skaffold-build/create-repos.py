@@ -13,10 +13,9 @@ def main():
           repositoryName=artifact['image']
         )
       except ClientError as e:
-        if e.response['Error']['Code'] == 'RepositoryAlreadyExists':
+        if e.response['Error']['Code'] == 'RepositoryAlreadyExistsException':
           pass
         else:
-          print(e.response['Error']['Code'])
           raise(e)
 
 if __name__ == "__main__":
