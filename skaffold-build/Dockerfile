@@ -1,7 +1,7 @@
 # Container image that runs your code
 FROM gcr.io/k8s-skaffold/skaffold:v1.5.0
 
-RUN apt-get update && apt install -y python3-boto3
+RUN apt-get update && apt install -y python3-boto3 python3-yaml
 
 # Copies your code file from your action repository to the filesystem path `/` of the container
 COPY create-repos.py /create-repos.py
