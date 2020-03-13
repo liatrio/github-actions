@@ -1,11 +1,14 @@
 This repo contains a collection of GitHub Actions:
 
-# skaffold-build
-Run `skaffold build` in your current repository.  Options:
+# ECR
+Login and setup ECR.  Supports following inputs
 
-* **login_ecr** set to `true` if you'd like to login to ECR (Default: true)
-* **create_ecr** set to `true` if you'd like to create ECR repositories from skaffold.yaml (Default: true)
-* **push** set to `true` if you'd like to push images that were created (Default: true)
+* **login** set to `true` if you'd like to login to ECR (Default: true)
+* **create_repos** set to `true` if you'd like to create ECR repositories from skaffold.yaml (Default: true)
+
+Provides following outputs:
+
+* **registry** the ECR registry
 
 ```
 # Sample workflow
@@ -22,6 +25,15 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ secrets.AWS_REGION }}
         role-duration-seconds: 1200
+    - uses: ./.github/actions/ecr
+```
+
+# skaffold-build
+Run `skaffold build` in your current repository.  Options:
+
+* **push** set to `true` if you'd like to push images that were created (Default: true)
+
+```
     - name: Skaffold Build
       uses: ./.github/actions/skaffold
 ```

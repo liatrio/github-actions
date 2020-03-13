@@ -1,0 +1,17 @@
+name: 'ECR'
+description: 'ECR Setup'
+inputs:
+  login:
+    default: "true"
+    description: 'Login to ECR repos automatically.'
+    required: false
+  create_repos:
+    default: "true"
+    description: 'Create ECR repos automatically.'
+    required: false
+outputs:
+  registry:
+    description: 'The ECR docker registry' 
+runs:
+  using: 'docker'
+  image: 'Dockerfile'

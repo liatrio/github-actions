@@ -1,14 +1,6 @@
 name: 'Skaffold'
 description: 'Run Skaffold'
 inputs:
-  login_ecr:
-    default: "true"
-    description: 'Login to ECR repos automatically.'
-    required: false
-  create_ecr:
-    default: "true"
-    description: 'Create ECR repos automatically.'
-    required: false
   push:
     default: "true"
     description: 'Push images'
