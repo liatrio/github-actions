@@ -1,15 +1,14 @@
 name: 'Skaffold'
 description: 'Run Skaffold'
 inputs:
-  default_repo:  
-    description: 'URL of docker repo to push to.  Leave blank to disable push.'
+  login_ecr:
+    default: "true"
+    description: 'Login to ECR repos automatically.'
     required: false
-  create:
+  create_ecr:
     default: "true"
     description: 'Create ECR repos automatically.'
     required: false
 runs:
   using: 'docker'
   image: 'Dockerfile'
-  args:
-    - ${{ inputs.default_repo }}

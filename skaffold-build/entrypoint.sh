@@ -1,13 +1,13 @@
 #!/bin/sh -l
 set -e
-if [ -z "$1" ]
+
+if [ $INPUT_LOGIN_ECR = "true" ]
 then
-  skaffold config set --global local-cluster true
-else
-  export SKAFFOLD_DEFAULT_REPO=$1
+  $(aws ecr get-login --no-include-email)
+  export SKAFFOLD_DEFAULT_REPO=$(aws sts get-caller-identity --query Account --output text).dkr.ecr.${AWS_REGION}.amazonaws.com
 fi
 
-if [ $INPUT_CREATE = "true" ]
+if [ $INPUT_CREATE_ECR = "true" ]
 then
   /create-repos.py
 fi
