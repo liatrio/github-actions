@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import yaml
 import boto3
+from botocore.exceptions import ClientError
 
 def main():
   client = boto3.client('ecr')
@@ -11,8 +12,11 @@ def main():
         client.create_repository(
           repositoryName=artifact['image']
         )
-      except client.exceptions.RepositoryAlreadyExistsException:
-        pass
+      except ClientError as e:
+        if e.response['Error']['Code'] == 'EntityAlreadyExists':
+          pass
+        else:
+          raise(e)
 
 if __name__ == "__main__":
   main()
