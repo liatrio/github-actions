@@ -1,0 +1,22 @@
+name: 'Helm Push'
+description: 'Run Helm Push'
+inputs:
+  bucket:
+    default: ""
+    description: 'Bucket to to push to'
+    required: true
+  chart:
+    default: ""
+    description: 'Path to helm chart'
+    required: true
+  version:
+    default: ""
+    description: 'Version to update to'
+    required: false
+  appVersion:
+    default: ""
+    description: 'App Version to update to'
+    required: false
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
