@@ -84,3 +84,27 @@ jobs:
       with:
         values: inputs.sdm_version=${{ steps.git.outputs.version}}
 ```
+
+# helm-push
+Package and push a helm chart.  Supports following inputs:
+
+* **bucket** Bucket to to push to
+* **chart** Path to helm chart
+* **version** Version to update
+* **appVersion** App version to update
+
+```
+# Sample 
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    steps:
+    - name: Helm Chart
+      uses: liatrio/github-actions/helm-push@master
+      with:
+        chart: charts/operator-toolchain
+        bucket: liatrio-helm
+        version: v1.0.0
+        appVersion: v1.0.0
+```
