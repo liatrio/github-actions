@@ -11,11 +11,18 @@ type helmRepository struct {
 	Url  string `json:"url"`
 }
 
-func retrieveEnvironmentVariables() {
-
+func retrieveEnvironmentVariables() map[string]string {
+	envVars := make(map[string]string)
+	envVars["ARGS"] = os.Getenv("ARGS")
+	envVars["INPUT_APPVERSION"] = os.Getenv("INPUT_APPVERSION")
+	envVars["INPUT_CHART"] = os.Getenv("INPUT_CHART")
+	envVars["INPUT_BUCKET"] = os.Getenv("INPUT_BUCKET")
+	envVars["INPUT_VERSION"] = os.Getenv("INPUT_VERSION")
+	return envVars
 }
 
-func getHelmRepositories(helmRepositories *[]helmRepository, args string) error {
+func getHelmRepositories(helmRepositories *[]helmRepository) error {
+	args := os.Args[1]
 	err := json.Unmarshal([]byte(args), helmRepositories)
 	if err != nil {
 		return err
@@ -26,10 +33,10 @@ func getHelmRepositories(helmRepositories *[]helmRepository, args string) error 
 func main() {
 	//function to retrieve all env vars
 	// main should just serve as place to run each command from entrypoin
-	args := os.Args[1]
+
 	var helmRepositories []helmRepository
 
-	err := getHelmRepositories(&helmRepositories, args)
+	err := getHelmRepositories(&helmRepositories)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -38,4 +45,6 @@ func main() {
 	fmt.Println(helmRepositories)
 
 	fmt.Println("hello world")
+
+	fmt.Println(retrieveEnvironmentVariables())
 }
