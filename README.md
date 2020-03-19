@@ -92,6 +92,7 @@ Package and push a helm chart.  Supports following inputs:
 * **chart** Path to helm chart
 * **version** Version to update
 * **appVersion** App version to update
+* **dependencies** App version to update
 
 ```
 # Sample 
@@ -107,4 +108,6 @@ jobs:
         bucket: liatrio-helm
         version: v1.0.0
         appVersion: v1.0.0
+        dependencies: '[{"name":"elastic","url":"https://helm.elastic.co"}]'
+
 ```

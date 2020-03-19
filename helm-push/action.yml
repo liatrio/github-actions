@@ -17,6 +17,10 @@ inputs:
     default: ""
     description: 'App Version to update to'
     required: false
+  dependencies:
+    default: ""
+    description: 'Dependencies to add'
+    required: false
 runs:
   using: 'docker'
   image: 'Dockerfile'

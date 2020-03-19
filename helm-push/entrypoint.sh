@@ -14,6 +14,17 @@ then
   ARGS="$ARGS --app-version ${INPUT_APPVERSION}"
 fi
 
+if [ ! -z $INPUT_DEPENDENCIES ]
+  echo "updating dependencies"
+  ARGS="$ARGS --dependency-update"
+then
+  for config in $(echo $INPUT_DEPENDENCIES | jq -rc '.[]'); do
+    name=$(echo ${config} | jq -r '.name')
+    url=$(echo ${config} | jq -r '.url')
+    helm repo add $name $url
+  done;
+fi
+
 helm lint $INPUT_CHART
 helm package $ARGS $INPUT_CHART
 
