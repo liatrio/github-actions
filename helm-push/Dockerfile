@@ -1,6 +1,6 @@
 FROM alpine/helm:2.12.2
 
-RUN apk add --no-cache bash git curl
+RUN apk add --no-cache bash git curl jq
 
 ENV XDG_DATA_HOME /root/.local/share
 ENV HELM_HOME ${XDG_DATA_HOME}/helm
