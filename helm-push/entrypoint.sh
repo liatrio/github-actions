@@ -15,9 +15,9 @@ then
 fi
 
 if [ ! -z $INPUT_DEPENDENCIES ]
+then
   echo "updating dependencies"
   ARGS="$ARGS --dependency-update"
-then
   for config in $(echo $INPUT_DEPENDENCIES | jq -rc '.[]'); do
     name=$(echo ${config} | jq -r '.name')
     url=$(echo ${config} | jq -r '.url')
