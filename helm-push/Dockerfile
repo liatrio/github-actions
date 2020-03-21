@@ -1,8 +1,6 @@
-FROM alpine/helm:2.12.2 AS helm2
-
 FROM alpine/helm:3.1.2
 
-COPY --from=helm2 /usr/bin/helm /usr/bin/helm2
+COPY --from=alpine/helm:2.12.2 /usr/bin/helm /usr/bin/helm2
 
 RUN apk add --no-cache bash git curl jq
 
