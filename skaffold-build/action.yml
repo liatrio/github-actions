@@ -5,6 +5,10 @@ inputs:
     default: ""
     description: 'Repo to push images to or empty string to disable push'
     required: false
+  skaffold_file_path:
+    default: ""
+    description: 'Path to a skaffold.yaml file'
+    required: false
 runs:
   using: 'docker'
   image: 'Dockerfile'
