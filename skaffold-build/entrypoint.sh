@@ -8,4 +8,9 @@ else
   export SKAFFOLD_DEFAULT_REPO=$INPUT_DEFAULT_REPO
 fi
 
-skaffold build
+if [ -z $INPUT_SKAFFOLD_FILE_PATH ]
+then
+  skaffold build
+else
+  skaffold build -f $INPUT_SKAFFOLD_FILE_PATH
+fi
