@@ -32,6 +32,9 @@ jobs:
 Run `skaffold build` in your current repository.  Options:
 
 * **default_repo** Repo to push to.  Set to '' to skip pushing (Default: '')
+* **docker_username** Username to use when running `docker login`. Omit to skip `docker login`
+* **docker_password** Password to use when running `docker login`. Omit to skip `docker login`
+* **docker_registry** Registry to use when running `docker login`. Omit to skip `docker login`
 
 ```
     - name: Skaffold Build
