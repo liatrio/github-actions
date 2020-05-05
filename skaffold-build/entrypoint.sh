@@ -8,8 +8,10 @@ else
   export SKAFFOLD_DEFAULT_REPO=$INPUT_DEFAULT_REPO
 fi
 
-if [[ -v ${INPUT_DOCKER_USERNAME} && -v ${INPUT_DOCKER_PASSWORD} && -v ${INPUT_DOCKER_REGISTRY} ]]; then
-    docker login -u "${INPUT_DOCKER_USERNAME}" -p "${INPUT_DOCKER_PASSWORD}" "${INPUT_DOCKER_REGISTRY}"
+if [[ -z ${INPUT_DOCKER_USERNAME} || -z ${INPUT_DOCKER_PASSWORD} || -z ${INPUT_DOCKER_REGISTRY} ]]; then
+  echo "Skipping docker login..."
+else
+  docker login -u "${INPUT_DOCKER_USERNAME}" -p "${INPUT_DOCKER_PASSWORD}" "${INPUT_DOCKER_REGISTRY}"
 fi
 
 if [ -z $INPUT_SKAFFOLD_FILE_PATH ]
