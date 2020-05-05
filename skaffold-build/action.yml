@@ -9,6 +9,18 @@ inputs:
     default: ""
     description: 'Path to a skaffold.yaml file'
     required: false
+  docker_username:
+    default: ""
+    description: 'Docker username'
+    required: false
+  docker_password:
+    default: ""
+    description: 'Docker password'
+    required: false
+  docker_registry_url:
+    default: ""
+    description: 'Docker registry url'
+    required: false
 runs:
   using: 'docker'
   image: 'Dockerfile'
