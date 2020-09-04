@@ -18,4 +18,10 @@ inputs:
     required: true
 runs:
   using: 'docker'
-  image: 'Dockerfile'
+  image: 'docker://liatrio/gitty-up:0.1.4'
+  env:
+    GITOPS_GIT_URL: ${{ inputs.url }}
+    GITOPS_GIT_USERNAME: ${{ inputs.username }}
+    GITOPS_GIT_PASSWORD: ${{ inputs.password }}
+    GITOPS_REPO_FILE: ${{ inputs.file }}
+    GITOPS_VALUES: ${{ inputs.values }}
