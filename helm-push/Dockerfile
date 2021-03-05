@@ -7,7 +7,7 @@ RUN apk add --no-cache bash git curl jq
 ENV XDG_DATA_HOME /root/.local/share
 ENV HELM_HOME ${XDG_DATA_HOME}/helm
 
-RUN helm2 init --client-only
+RUN helm2 init --client-only --stable-repo-url "https://charts.helm.sh/stable"
 
 RUN curl -Ls https://github.com/steven-sheehy/helm-s3/releases/download/v0.9.0/helm-s3_0.9.0_linux_amd64.tar.gz -o /tmp/helm-s3.tar.gz \
     && mkdir -p ${HELM_HOME}/plugins/helm-s3 \
