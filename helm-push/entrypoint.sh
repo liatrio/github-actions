@@ -28,5 +28,5 @@ fi
 helm lint $INPUT_CHART
 helm package $ARGS $INPUT_CHART
 
-helm2 repo add liatrio s3://${INPUT_BUCKET}/charts
-helm2 s3 push --force --acl="public-read" $(basename $INPUT_CHART)-${INPUT_VERSION}.tgz liatrio
+helm repo add liatrio s3://${INPUT_BUCKET}/charts
+helm s3 push --force --acl="public-read" $(basename $INPUT_CHART)-${INPUT_VERSION}.tgz liatrio
