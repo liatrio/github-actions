@@ -29,7 +29,6 @@ helm lint $INPUT_CHART
 helm package $ARGS $INPUT_CHART
 
 helm repo add liatrio s3://${INPUT_BUCKET}/charts
-helm repo list
 helm env
-echo "$(basename $INPUT_CHART)-${INPUT_VERSION}.tgz"
+ln -s /github/home/.config/helm/repositories.yaml /root/.local/share/helm/repository/repositories.yaml
 helm s3 push --force --acl="public-read" $(basename $INPUT_CHART)-${INPUT_VERSION}.tgz liatrio
