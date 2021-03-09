@@ -32,5 +32,6 @@ helm repo add liatrio s3://${INPUT_BUCKET}/charts
 helm env
 pwd
 whoami
+mkdir -p /root/.local/share/helm/repository/
 ln -s /github/home/.config/helm/repositories.yaml /root/.local/share/helm/repository/repositories.yaml
 helm s3 push --force --acl="public-read" $(basename $INPUT_CHART)-${INPUT_VERSION}.tgz liatrio
