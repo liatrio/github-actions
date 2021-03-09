@@ -30,4 +30,5 @@ helm package $ARGS $INPUT_CHART
 
 helm repo add liatrio s3://${INPUT_BUCKET}/charts
 helm repo list
+echo "$(basename $INPUT_CHART)-${INPUT_VERSION}.tgz"
 helm s3 push --force --acl="public-read" $(basename $INPUT_CHART)-${INPUT_VERSION}.tgz liatrio
