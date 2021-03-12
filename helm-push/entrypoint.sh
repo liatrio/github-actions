@@ -29,4 +29,4 @@ helm lint $INPUT_CHART
 helm package $ARGS $INPUT_CHART
 
 helm repo add liatrio s3://${INPUT_BUCKET}/charts
-helm s3 push --force --acl="public-read" $(basename $INPUT_CHART)-${INPUT_VERSION}.tgz liatrio
+helm s3 push --force --relative --acl="public-read" $(basename $INPUT_CHART)-${INPUT_VERSION}.tgz liatrio && echo "s3 plugin push was successful" || echo "s3 plugin push failed"
