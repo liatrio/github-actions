@@ -10,4 +10,4 @@ NEXT_VERSION=$(node /semver-increment $PREVIOUS_VERSION $SEMVER_POSITION)
 echo "Change version in $MANIFEST_FILE:$MANIFEST_PATH from $PREVIOUS_VERSION to $NEXT_VERSION"
 
 # Change manifest value
-#yq w -i $FILE $PATH $NEXT_VERSION
+yq w -i $MANIFEST_FILE $MANIFEST_PATH $NEXT_VERSION
