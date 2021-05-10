@@ -1,0 +1,24 @@
+name: 'GitOps GitHub Pull Request'
+description: 'Create GitHub Pull Request with current changes'
+inputs:
+  repo:
+    description: 'GitHub repo to update'
+    required: true
+  token:
+    description: 'GitHub personal access token (PAT)'
+    required: true
+  message:
+    description: 'Git commit message'
+    required: true
+  auto-merge:
+    description: 'Automatically merge pull request'
+    required: false
+    default: ""
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    GITHUB_REPO: ${{ inputs.repo }}
+    GITHUB_TOKEN: ${{ inputs.token }}
+    COMMIT_MESSAGE: ${{ inputs.message }}
+    AUTO_MERGE: ${{ inputs.auto-merge }}

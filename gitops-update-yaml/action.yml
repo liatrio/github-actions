@@ -16,4 +16,4 @@ runs:
   env:
     MANIFEST_FILE: ${{ inputs.file }}
     MANIFEST_PATH: ${{ inputs.path }}
-    VALUE: ${{ inputs.position }}
+    VALUE: ${{ inputs.value }}
