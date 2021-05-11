@@ -114,3 +114,11 @@ jobs:
         dependencies: '[{"name":"elastic","url":"https://helm.elastic.co"}]'
 
 ```
+
+# GitOps
+
+These actions can be used together in a job to make changes to a source repo and create a pull request to trigger a update in a downstream dependency.
+
+ - [gitops-gh-pr](./gitops-gh-pr/)
+ - [gitops-update-yaml](./gitops-update-yaml/)
+ - [gitops-semver-increment-yaml](./gitops-semver-increment-yaml/)
