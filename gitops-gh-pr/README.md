@@ -2,7 +2,7 @@
 
 Commits all current changes and creates a GitHub Pull Request. Used as last step in job to apply changes to a GitOps or downstream repo to trigger a release.
 
-**Addition GitOps Actions:**
+**Additional GitOps Actions:**
  - [gitops-update-yaml](../gitops-update-yaml/)
  - [gitops-semver-increment-yaml](../gitops-semver-increment-yaml/)
 
