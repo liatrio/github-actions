@@ -8,7 +8,7 @@ inputs:
     description: 'Path expression of value to increment'
     required: true
   value:
-    description: 'New value to'
+    description: 'New value to set'
     required: true
 runs:
   using: 'docker'
