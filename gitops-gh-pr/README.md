@@ -1,6 +1,6 @@
 # GitOps GitHub Pull Request YAML Update Action
 
-Commits all current changes and creates a GitHub Pull Request. Used as last step in job to apply changes to a GitOps or downstream repo to trigger a release.
+Commits all current changes and creates a GitHub Pull Request. Used as the last step in a job to apply changes to a GitOps or downstream repo to trigger a release.
 
 **Additional GitOps Actions:**
  - [gitops-update-yaml](../gitops-update-yaml/)
