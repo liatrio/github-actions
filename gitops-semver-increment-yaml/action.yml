@@ -1,0 +1,20 @@
+name: 'GitOps Version Increment (YAML)'
+description: 'Increment a semantic version in a YAML file'
+inputs:
+  file:
+    description: 'File to update'
+    required: true
+  path:
+    description: 'Path expression of value to increment'
+    required: true
+  position:
+    description: 'SemVer position to increment (PATCH|MINOR|MAJOR)'
+    required: false
+    default: "PATCH"
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    MANIFEST_FILE: ${{ inputs.file }}
+    MANIFEST_PATH: ${{ inputs.path }}
+    SEMVER_POSITION: ${{ inputs.position }}

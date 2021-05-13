@@ -1,0 +1,19 @@
+name: 'GitOps Update Value (YAML)'
+description: 'Update a value in a YAML file'
+inputs:
+  file:
+    description: 'File to update'
+    required: true
+  path:
+    description: 'Path expression of value to increment'
+    required: true
+  value:
+    description: 'New value to set'
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    MANIFEST_FILE: ${{ inputs.file }}
+    MANIFEST_PATH: ${{ inputs.path }}
+    VALUE: ${{ inputs.value }}
