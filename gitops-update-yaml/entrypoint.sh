@@ -2,9 +2,9 @@
 set -e
 
 # get old value
-PREVIOUS_VALUE=$(yq r $MANIFEST_FILE $MANIFEST_PATH)
+PREVIOUS_VALUE=$(yq e "$MANIFEST_PATH" $MANIFEST_FILE)
 
 echo "Change value in $MANIFEST_FILE:$MANIFEST_PATH from $PREVIOUS_VALUE to $VALUE"
 
 # Change manifest value
-yq w -i $MANIFEST_FILE $MANIFEST_PATH $VALUE
+yq e "$MANIFEST_PATH = \"$VALUE\"" -i $MANIFEST_FILE
