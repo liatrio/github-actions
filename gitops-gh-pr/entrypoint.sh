@@ -17,7 +17,7 @@ git checkout -b $BRANCH
 git push origin $BRANCH
 
 # Create pull request
-gh pr create --fill
+gh pr create --fill || true
 
 # Merge pull request (optional)
 if [ ! -z "$MERGE_AUTO" ]; then
