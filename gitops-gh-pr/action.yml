@@ -10,10 +10,14 @@ inputs:
   message:
     description: 'Git commit message'
     required: true
-  auto-merge:
-    description: 'Automatically merge pull request'
+  merge-auto:
+    description: 'Set non empty string to automatically merge pull request'
     required: false
-    default: ""
+    default: ''
+  merge-type:
+    description: 'Type of merge. Only applies if merge-auto is set. [squash(default)|rebase|merge]'
+    required: false
+    default: 'squash'
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -21,4 +25,5 @@ runs:
     GITHUB_REPO: ${{ inputs.repo }}
     GITHUB_TOKEN: ${{ inputs.token }}
     COMMIT_MESSAGE: ${{ inputs.message }}
-    AUTO_MERGE: ${{ inputs.auto-merge }}
+    MERGE_AUTO: ${{ inputs.merge-auto }}
+    MERGE_TYPE: ${{ inputs.merge-type }}

@@ -8,9 +8,8 @@ git config --local user.email "gitops@liatr.io"
 git config --local user.name "GitOps Automation"
 
 # Commit change
-MESSAGE="gitops: $COMMIT_MESSAGE"
 git add .
-git commit -m "$MESSAGE"
+git commit -m "gitops: $COMMIT_MESSAGE"
 
 # Create branch
 BRANCH="gitops-$(git rev-parse --short HEAD)"
@@ -21,6 +20,6 @@ git push origin $BRANCH
 gh pr create --fill
 
 # Merge pull request (optional)
-if [ ! -z "$AUTO_MERGE" ]; then
-    gh pr merge --rebase
+if [ ! -z "$MERGE_AUTO" ]; then
+    gh pr merge --$MERGE_TYPE
 fi
