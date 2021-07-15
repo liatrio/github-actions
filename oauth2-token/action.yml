@@ -1,14 +1,14 @@
 name: Oauth2 Token
-description: Uses the client credentials grant to provide access tokens for external services
+description: Uses the client credentials grant to provide an access token for external services
 inputs:
   clientId:
-    description: clientId
+    description: The client identifier
     required: true
   clientSecret:
-    description: clientSecret
+    description: The client secret for the given clientId
     required: true
   tokenUrl:
-    description: tokenUrl
+    description: OAuth2 server token url.
     required: true
   scopes:
     description: A space delimited list of oauth2 scopes to request.
