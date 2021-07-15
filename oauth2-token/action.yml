@@ -1,0 +1,24 @@
+name: Oauth2 Token
+description: Uses the client credentials grant to provide access tokens for external services
+inputs:
+  clientId:
+    description: clientId
+    required: true
+  clientSecret:
+    description: clientSecret
+    required: true
+  tokenUrl:
+    description: tokenUrl
+    required: true
+  scopes:
+    description: A space delimited list of oauth2 scopes to request.
+    required: false
+    default: ""
+runs:
+  using: docker
+  image: Dockerfile
+  env:
+    CLIENT_ID: ${{ inputs.clientId }}
+    CLIENT_SECRET: ${{ inputs.clientSecret }}
+    SCOPES: ${{ inputs.scopes }}
+    TOKEN_URL: ${{ inputs.tokenUrl }}

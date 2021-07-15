@@ -122,3 +122,25 @@ These actions can be used together in a job to make changes to a source repo and
  - [gitops-gh-pr](./gitops-gh-pr/)
  - [gitops-update-yaml](./gitops-update-yaml/)
  - [gitops-semver-increment-yaml](./gitops-semver-increment-yaml/)
+
+# oauth2-token
+
+An action for fetching an access token using the client credentials flow. 
+The `accessToken` output is [masked](https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#masking-a-value-in-log) from the build logs.
+
+```yaml
+jobs:
+  demo:
+    steps:
+    - name: Fetch Token
+      uses: liatrio/github-actions/oauth2-token@master
+      id: token
+      with:
+        clientId: ${{ secrets.CLIENT_ID }}
+        clientSecret: ${{ secrets.CLIENT_SECRET }}
+        scopes: "custom_scope" # optional
+        tokenUrl: https://idp.example.com/oauth2/token
+    - name: API Request
+      run: |
+        curl -H "Authorization: Bearer ${{ steps.token.outputs.accessToken }}" https://api.example.com/protected
+```
