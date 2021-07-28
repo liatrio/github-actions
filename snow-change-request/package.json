@@ -1,7 +1,7 @@
 {
-  "name": "create-change-request",
+  "name": "snow-change-request",
   "version": "0.0.1",
-  "description": "A GitHub Action for creating ServiceNow Change Requests",
+  "description": "A GitHub Action for creating ServiceNow change requests.",
   "main": "index.js",
   "private": true,
   "type": "module",

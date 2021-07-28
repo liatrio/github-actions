@@ -18,10 +18,12 @@ if (!(serviceNowUrl && username && password)) {
 core.setSecret(password);
 core.info(`Using ServiceNow instance: ${serviceNowUrl}`);
 
-try {
-    const basicAuth = Buffer.from(`${username}:${password}`).toString('base64')
-    core.setSecret(basicAuth);
+const basicAuth = Buffer.from(`${username}:${password}`).toString('base64');
+core.setSecret(basicAuth);
 
+try {
+
+    core.info('Creating change request');
     const response = await fetch(`${serviceNowUrl}/api/sn_chg_rest/change/normal`, {
         method: 'POST',
         body: JSON.stringify({
@@ -41,13 +43,19 @@ try {
     }
 
     const changeRequest = await response.json();
-    const id = changeRequest?.result?.number?.value;
+    const requestNumber = changeRequest?.result?.number?.value;
+    const sysId = changeRequest?.result?.sys_id?.value;
 
-    if (!id) {
+    if (!sysId) {
         fail("Unable to find change request id in response");
     }
 
-    core.setOutput("id", id);
+    const link = `${serviceNowUrl}/nav_to.do?uri=${encodeURIComponent(`/change_request.do?sys_id=${sysId}`)}`;
+    core.info("Successfully created change request");
+    core.info(`View the change request: ${link}`);
+
+    core.setOutput("sysId", sysId);
+    core.setOutput("number", requestNumber);
 } catch (error) {
     fail(`Error creating change request: ${error}`);
 }
