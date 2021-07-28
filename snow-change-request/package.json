@@ -1,0 +1,12 @@
+{
+  "name": "create-change-request",
+  "version": "0.0.1",
+  "description": "A GitHub Action for creating ServiceNow Change Requests",
+  "main": "index.js",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@actions/core": "^1.4.0",
+    "node-fetch": "^2.6.1"
+  }
+}
