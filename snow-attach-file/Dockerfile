@@ -7,4 +7,4 @@ COPY yarn.lock .
 
 RUN yarn install --production
 COPY index.js .
-ENTRYPOINT ["node", "index.js"]
+ENTRYPOINT ["node", "/usr/src/app/index.js"]
