@@ -1,4 +1,5 @@
 import * as core from '@actions/core';
+import github from '@actions/github';
 import fetch from 'node-fetch';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc.js'
@@ -24,6 +25,8 @@ core.info(`Using ServiceNow instance: ${serviceNowUrl}`);
 
 const basicAuth = Buffer.from(`${username}:${password}`).toString('base64');
 core.setSecret(basicAuth);
+
+const octokit = github.getOctokit(core.getInput('githubToken'));
 
 const serviceNowApiClient = async ({method = 'GET', path, params, body}) => {
     const options = {
@@ -92,6 +95,30 @@ try {
 
     core.setOutput('sysId', sysId);
     core.setOutput('number', requestNumber);
+
+    const comment = `
+# ServiceNow Change Request
+
+[\`${requestNumber}\`](${link})
+
+State: \`assess\` 
+
+<!---sysid: ${sysId}--->
+`;
+    const {owner, repo, number: issue_number} = github.context.issue;
+
+    if (issue_number) {
+        core.info(`Commenting on pull request ${owner}/${repo}#${issue_number}`);
+
+        const response = await octokit.rest.issues.createComment({
+            owner,
+            repo,
+            issue_number,
+            body: comment,
+        });
+
+        core.info(response.data.html_url);
+    }
 } catch (error) {
     fail(`Error creating change request: ${error}`);
 }

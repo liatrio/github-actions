@@ -4,6 +4,9 @@ inputs:
   changeRequestMessage:
     description: Change request message
     required: true
+  githubToken:
+    description: GitHub access token -- used to post comments on pull requests
+    required: true
   serviceNowInstanceUrl:
     description: Base URL of the ServiceNow instance
     required: true
