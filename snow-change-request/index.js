@@ -1,5 +1,9 @@
 import * as core from '@actions/core';
 import fetch from 'node-fetch';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc.js'
+
+dayjs.extend(utc);
 
 const serviceNowUrl = core.getInput('serviceNowInstanceUrl');
 const username = core.getInput('serviceNowUsername');
@@ -21,41 +25,73 @@ core.info(`Using ServiceNow instance: ${serviceNowUrl}`);
 const basicAuth = Buffer.from(`${username}:${password}`).toString('base64');
 core.setSecret(basicAuth);
 
-try {
-
-    core.info('Creating change request');
-    const response = await fetch(`${serviceNowUrl}/api/sn_chg_rest/change/normal`, {
-        method: 'POST',
-        body: JSON.stringify({
-            description: changeRequestMessage,
-            short_description: 'Automated change request',
-        }),
+const serviceNowApiClient = async ({method = 'GET', path, params, body}) => {
+    const options = {
+        method,
         headers: {
             'Accept': 'application/json',
             'Authorization': `Basic ${basicAuth}`,
-            'Content-Type': 'application/json',
-        }
-    });
+        },
+    };
 
-    if (!response.ok) {
-        const responseText = await response.text();
-        fail(`Non-2xx response code creating change request (${response.status}): ${responseText}`);
+    if (body) {
+        options.body = JSON.stringify(body);
+        options.headers['Content-Type'] = 'application/json';
     }
 
-    const changeRequest = await response.json();
+    let url = `${serviceNowUrl}${path}`;
+    if (params) {
+        url = `${url}?${new URLSearchParams(params)}`
+    }
+
+    const response = await fetch(url, options);
+    if (!response.ok) {
+        fail(`Non-2xx response code from ServiceNow (${response.status}): ${await response.text()}`);
+    }
+
+    return response.json();
+}
+
+try {
+    core.info('Finding approval groups');
+    const userGroups = await serviceNowApiClient({
+        path: '/api/now/table/sys_user_group',
+        params: {
+            name: 'CAB Approval',
+        },
+    });
+    const approvalGroupId = userGroups.result[0].sys_id;
+
+    const now = dayjs.utc();
+    const changeStart = now.format('YYYY-MM-DD HH:mm:ss');
+    const changeEnd = now.add(1, 'hour').format('YYYY-MM-DD HH:mm:ss');
+
+    core.info('Creating change request');
+    const changeRequest = await serviceNowApiClient({
+        method: 'POST',
+        path: '/api/sn_chg_rest/change/normal',
+        body: {
+            assignment_group: approvalGroupId,
+            description: changeRequestMessage,
+            short_description: 'Automated change request',
+            state: 'assess',
+            start_date: changeStart,
+            end_date: changeEnd,
+        },
+    });
     const requestNumber = changeRequest?.result?.number?.value;
     const sysId = changeRequest?.result?.sys_id?.value;
 
     if (!sysId) {
-        fail("Unable to find change request id in response");
+        fail('Unable to find change request id in response');
     }
 
     const link = `${serviceNowUrl}/nav_to.do?uri=${encodeURIComponent(`/change_request.do?sys_id=${sysId}`)}`;
-    core.info("Successfully created change request");
+    core.info('Successfully created change request');
     core.info(`View the change request: ${link}`);
 
-    core.setOutput("sysId", sysId);
-    core.setOutput("number", requestNumber);
+    core.setOutput('sysId', sysId);
+    core.setOutput('number', requestNumber);
 } catch (error) {
     fail(`Error creating change request: ${error}`);
 }
