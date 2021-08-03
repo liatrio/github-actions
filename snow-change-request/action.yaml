@@ -1,13 +1,35 @@
 name: snow-change-request
 description: Create a change request in ServiceNow
 inputs:
+  action:
+    description: Create a change request, attach a file, or approve a change request
+    required: true
+    default: create # possible values: create, attach-file, approve
+  approvalAssignmentGroup:
+    description: "Name of the group that needs to approve the change request"
+    default: 'CAB Approval'
+    required: false
+  attachmentFilePath:
+    description: Path to the file, including the file name
+    required: false
+  attachmentFileContentType:
+    description: Content type of the file
+    default: "application/text"
+    required: false
+  attachmentTableName:
+    description: Table in ServiceNow associated with requestSysId. Override this to attach to incidents or item requests.
+    default: change_request
+    required: false
   changeRequestMessage:
     description: Change request message
-    required: true
+    required: false
   githubToken:
     description: GitHub access token -- used to post comments on pull requests
     required: true
-  serviceNowInstanceUrl:
+  requestSysId:
+    description: Sysid of the target request
+    required: false
+  serviceNowUrl:
     description: Base URL of the ServiceNow instance
     required: true
   serviceNowUsername:
