@@ -25,7 +25,6 @@ export const createChangeRequest = async (inputs) => {
 
     core.info('Creating change request');
     const changeRequest = await snow.post({
-        method: 'POST',
         path: '/api/sn_chg_rest/change/normal',
         body: {
             assignment_group: approvalGroupId,

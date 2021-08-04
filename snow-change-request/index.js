@@ -4,6 +4,7 @@ import {
     createChangeRequest,
     approveNormalChangeRequest,
     requireChangeRequestApproval,
+    transitionState,
 } from './actions/index.js';
 
 const getInputs = () => {
@@ -16,6 +17,7 @@ const getInputs = () => {
         'attachmentTableName',
         'changeRequestMessage',
         'githubToken',
+        'transition',
         'requestSysId',
         'serviceNowUrl',
         'serviceNowUsername',
@@ -38,6 +40,7 @@ const actions = {
     create: createChangeRequest,
     approve: approveNormalChangeRequest,
     'require-approval': requireChangeRequestApproval,
+    transition: transitionState,
 };
 
 try {

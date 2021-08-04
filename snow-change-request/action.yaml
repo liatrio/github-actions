@@ -26,6 +26,9 @@ inputs:
   githubToken:
     description: GitHub access token -- used to post comments on pull requests
     required: true
+  transition:
+    description: Name of the state to which to transition
+    required: false
   requestSysId:
     description: Sysid of the target request
     required: false
