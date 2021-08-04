@@ -27,7 +27,7 @@ export const approveNormalChangeRequest = async (inputs) => {
         owner,
         repo,
         issue_number,
-        'per-page': 100,
+        'per_page': 100,
     });
     const matchComment = new RegExp(`^<!-{2,}\\s*sysid:\\s*${inputs.requestSysId}\\s*-{2,}>\\s*$`, 'm');
     const comment = response.data.find((comment) => matchComment.test(comment.body));

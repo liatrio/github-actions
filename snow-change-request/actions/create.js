@@ -20,6 +20,7 @@ export const createChangeRequest = async (inputs) => {
         },
     });
     const approvalGroupId = userGroups.result[0].sys_id;
+    core.info(`Using approval group ${inputs.approvalAssignmentGroup} with sysid: ${approvalGroupId}`);
 
     const now = dayjs.utc();
     const changeStart = now.format('YYYY-MM-DD HH:mm:ss');
