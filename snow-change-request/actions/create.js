@@ -1,10 +1,7 @@
 import * as core from '@actions/core';
 import github from '@actions/github';
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc.js'
+import dayjs from '../dayjs.js';
 import * as serviceNow from '../snow.js';
-
-dayjs.extend(utc);
 
 export const createChangeRequest = async (inputs) => {
     validateInputs(inputs);

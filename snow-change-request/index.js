@@ -3,6 +3,7 @@ import {
     attachFile,
     createChangeRequest,
     approveNormalChangeRequest,
+    requireChangeRequestApproval,
 } from './actions/index.js';
 
 const getInputs = () => {
@@ -36,6 +37,7 @@ const actions = {
     'attach-file': attachFile,
     create: createChangeRequest,
     approve: approveNormalChangeRequest,
+    'require-approval': requireChangeRequestApproval,
 };
 
 try {
@@ -45,7 +47,6 @@ try {
     }
 
     await action(inputs);
-
 } catch (error) {
     fail(`Error performing action '${inputs.action}' on change request: ${error}`);
 }

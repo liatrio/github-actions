@@ -13,8 +13,8 @@ export const approveNormalChangeRequest = async (inputs) => {
     const approvalOptions = {
         path: `/api/sn_chg_rest/change/${inputs.requestSysId}/approvals`,
         body: {
-            state: 'approved'
-        }
+            state: 'approved',
+        },
     };
     core.info('Approving change request (assignment group)');
     await snow.patch(approvalOptions);
@@ -32,7 +32,7 @@ export const approveNormalChangeRequest = async (inputs) => {
     const matchComment = new RegExp(`^<!-{2,}\\s*sysid:\\s*${inputs.requestSysId}\\s*-{2,}>\\s*$`, 'm');
     const comment = response.data.find((comment) => matchComment.test(comment.body));
 
-    if(!comment) {
+    if (!comment) {
         core.warning('Unable to find change request comment');
         return
     }
@@ -40,10 +40,10 @@ export const approveNormalChangeRequest = async (inputs) => {
     core.info(`Updating comment ${comment.id}`);
     const updatedComment = comment.body.replace('Approval: `requested`', 'Approval: `approved`');
 
-   await octokit.rest.issues.updateComment({
+    await octokit.rest.issues.updateComment({
         owner,
         repo,
         comment_id: comment.id,
-        body: updatedComment
+        body: updatedComment,
     });
 };
