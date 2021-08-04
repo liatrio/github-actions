@@ -54,6 +54,7 @@ export const newClient = (inputs) => {
 
     return {
         get: request.bind(null, config, 'GET'),
+        patch: request.bind(null, config, 'PATCH'),
         post: request.bind(null, config, 'POST'),
     }
 };

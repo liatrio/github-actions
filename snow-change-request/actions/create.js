@@ -53,7 +53,7 @@ export const createChangeRequest = async (inputs) => {
 
 [\`${requestNumber}\`](${link})
 
-State: \`assess\` 
+Approval: \`requested\` 
 
 <!---sysid: ${sysId}--->
 `;
@@ -74,7 +74,6 @@ State: \`assess\`
 };
 
 const validateInputs = (inputs) => {
-    console.log('inputs', inputs)
     if (!inputs.approvalAssignmentGroup) {
         throw new Error('Must specify an assignment group')
     }
