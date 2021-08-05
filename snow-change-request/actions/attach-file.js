@@ -13,7 +13,7 @@ export const attachFile = async (inputs) => {
     }
 
     const snow = serviceNow.newClient(inputs);
-    const fileName = path.basename(inputs.attachmentFilePath);
+    const fileName = inputs.attachmentFileName || path.basename(inputs.attachmentFilePath);
     const rawFile = await fs.readFile(inputs.attachmentFilePath);
 
     core.info('Attaching file to change request');

@@ -12,6 +12,9 @@ inputs:
   attachmentFilePath:
     description: Path to the file, including the file name
     required: false
+  attachmentFileName:
+    description: Name the attachment should have in SerivceNow, does not need to match attachmentFilePath
+    required: false
   attachmentFileContentType:
     description: Content type of the file
     default: "application/text"
