@@ -15,18 +15,20 @@ export const transitionState = async (inputs) => {
 
     for (let i = 0; i < states.length; i++) {
         const state = states[i];
-        core.info(`Transition to state '${state}'`);
+        core.info(`Transitioning to state '${state}'`);
 
         const updates = {
-            path: `/api/sn_chg_rest/change/${inputs.requestSysId}`,
             state,
         };
 
-        if (inputs.transition === 'closed') {
+        if (state === 'closed') {
             updates.close_code = 'successful';
             updates.close_notes = 'Automatically closed by snow-change-request action';
         }
 
-        await snow.patch(updates);
+        await snow.patch({
+            path: `/api/sn_chg_rest/change/${inputs.requestSysId}`,
+            body: updates,
+        });
     }
 };
