@@ -1,7 +1,7 @@
 import * as core from '@actions/core';
 import github from '@actions/github';
 
-const sysIdComment = /^<![-]{2,}\s?sysid:\s?(?<sysId>[\w]{32})\s?[-]{2,}>\s?$/m;
+const sysIdComment = /^<!-{2,}\s?sysid:\s?(?<sysId>\w{32})\s?-{2,}>\s?$/m;
 
 export const lookupChangeRequest = async (inputs) => {
     const octokit = github.getOctokit(inputs.githubToken);
