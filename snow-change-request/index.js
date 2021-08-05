@@ -14,6 +14,7 @@ const getInputs = () => {
         'action',
         'approvalAssignmentGroup',
         'attachmentFilePath',
+        'attachmentFileName',
         'attachmentFileContentType',
         'attachmentTableName',
         'changeRequestMessage',
