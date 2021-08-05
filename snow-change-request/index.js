@@ -3,6 +3,7 @@ import {
     attachFile,
     createChangeRequest,
     approveNormalChangeRequest,
+    lookupChangeRequest,
     requireChangeRequestApproval,
     transitionState,
 } from './actions/index.js';
@@ -39,6 +40,7 @@ const actions = {
     'attach-file': attachFile,
     create: createChangeRequest,
     approve: approveNormalChangeRequest,
+    'lookup-change-request': lookupChangeRequest,
     'require-approval': requireChangeRequestApproval,
     transition: transitionState,
 };
