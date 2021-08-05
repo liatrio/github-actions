@@ -6,7 +6,7 @@ const sysIdComment = /^<!-{2,}\s?sysid:\s?(?<sysId>\w{32})\s?-{2,}>\s?$/m;
 export const lookupChangeRequest = async (inputs) => {
     const octokit = github.getOctokit(inputs.githubToken);
     const {owner, repo} = github.context.repo;
-    const {sha} = github.context;
+    const sha = inputs.sha || github.context.sha;
 
     core.info(`Finding pull requests associated with commit ${sha}`);
     // https://developer.github.com/changes/2019-04-11-pulls-branches-for-commit/

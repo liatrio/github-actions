@@ -21,6 +21,7 @@ const getInputs = () => {
         'githubToken',
         'transition',
         'requestSysId',
+        'sha',
         'serviceNowUrl',
         'serviceNowUsername',
         'serviceNowPassword',
