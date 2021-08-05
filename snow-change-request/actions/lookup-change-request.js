@@ -8,7 +8,9 @@ export const lookupChangeRequest = async (inputs) => {
     const {owner, repo} = github.context.repo;
     const {sha} = github.context;
 
-    core.info(`Finding pull requests associated with commit ${sha}`)
+    core.info(`Finding pull requests associated with commit ${sha}`);
+    // https://developer.github.com/changes/2019-04-11-pulls-branches-for-commit/
+    // This is technically a preview API, but it's been available since 2019
     const response = await octokit.rest.repos.listPullRequestsAssociatedWithCommit({
         owner,
         repo,
