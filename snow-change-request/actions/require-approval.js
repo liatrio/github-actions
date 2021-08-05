@@ -36,13 +36,3 @@ export const requireChangeRequestApproval = async (inputs) => {
         core.setFailed('The current time is not in the change window');
     }
 }
-
-
-
-
-
-
-
-
-
-
