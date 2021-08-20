@@ -17,7 +17,7 @@ inputs:
     default: ""
     description: 'Docker password'
     required: false
-  docker_registry_url:
+  docker_registry:
     default: ""
     description: 'Docker registry url'
     required: false
