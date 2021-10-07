@@ -9,9 +9,14 @@ inputs:
     description: The number of the pull request to leave comments on
     required: true
     default: ""
+  iam_role_to_assume:
+    description: The AWS IAM role to assume when running Terragrunt
+    required: false
+    default: ""
 runs:
   using: docker
   image: Dockerfile
   env:
     GITHUB_PR_NUMBER: ${{ inputs.pull_request_number }}
     TERRAGRUNT_STACK_PATH: ${{ inputs.terragrunt_stack_path }}
+    IAM_ROLE_TO_ASSUME: ${{ inputs.iam_role_to_assume }}
