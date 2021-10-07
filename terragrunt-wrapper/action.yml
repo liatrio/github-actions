@@ -1,0 +1,17 @@
+name: Terragrunt Wrapper
+description: Run Terragrunt with pre-configured settings
+inputs:
+  terragrunt_stack_path:
+    description: The path to your Terragrunt stack, which contains multiple stages to run
+    required: true
+    default: ""
+  pull_request_number:
+    description: The number of the pull request to leave comments on
+    required: true
+    default: ""
+runs:
+  using: docker
+  image: Dockerfile
+  env:
+    GITHUB_PR_NUMBER: ${{ inputs.pull_request_number }}
+    TERRAGRUNT_STACK_PATH: ${{ inputs.terragrunt_stack_path }}
