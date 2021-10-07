@@ -15,7 +15,7 @@ inputs:
     default: ""
 runs:
   using: docker
-  image: Dockerfile
+  image: "docker://harbor.parker.gg/library/terragrunt-wrapper:v1"
   env:
     GITHUB_PR_NUMBER: ${{ inputs.pull_request_number }}
     TERRAGRUNT_STACK_PATH: ${{ inputs.terragrunt_stack_path }}
