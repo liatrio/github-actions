@@ -5,8 +5,12 @@ inputs:
     description: The path to your Terragrunt stack, which contains multiple stages to run
     required: true
     default: ""
-  pull_request_number:
+  github_pull_request_number:
     description: The number of the pull request to leave comments on
+    required: true
+    default: ""
+  github_token:
+    description: The GitHub token to use for authentication when leaving comments
     required: true
     default: ""
   iam_role_to_assume:
@@ -17,6 +21,7 @@ runs:
   using: docker
   image: "docker://harbor.parker.gg/library/terragrunt-wrapper:v1"
   env:
-    GITHUB_PR_NUMBER: ${{ inputs.pull_request_number }}
+    GITHUB_TOKEN: ${{ inputs.github_token }}
+    GITHUB_PR_NUMBER: ${{ inputs.github_pull_request_number }}
     TERRAGRUNT_STACK_PATH: ${{ inputs.terragrunt_stack_path }}
     IAM_ROLE_TO_ASSUME: ${{ inputs.iam_role_to_assume }}
