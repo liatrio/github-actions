@@ -1,6 +1,6 @@
 module github.com/liatrio/github-actions/terragrunt-wrapper
 
-go 1.17
+go 1.16
 
 require (
 	github.com/google/go-github/v39 v39.1.0
