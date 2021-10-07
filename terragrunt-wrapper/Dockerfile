@@ -24,7 +24,7 @@ RUN --mount=type=cache,target=/root/.cache/go-build CGO_ENABLED=0 GOOS=linux GOA
 
 FROM alpine:3.14.2
 
-RUN apk add git && git --version
+RUN apk add --no-cache git
 
 WORKDIR /
 COPY --from=builder /workspace/terragrunt-wrapper .
