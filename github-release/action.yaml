@@ -6,13 +6,23 @@ runs:
     GITHUB_OWNER: ${{ inputs.owner }}
     GITHUB_REPO: ${{ inputs.repo  }}
     TAG_NAME: ${{ inputs.tag_name }}
+    TOKEN_NAME: ${{ inputs.token_name }}
+    PAT: ${{ inputs.pat }}
 
 description: 'Create a GitHub release'
 inputs: 
-  accept:
-    description: ''
-    default: 'application/vnd.github.v3+json'
-    required: false
+  Authorization:
+    description: 'Authenticate with your Github Repo'
+    default: ""
+    required: true
+  token_name:
+    descriptions: 'Token name for Authorization'
+    default: ""
+    required: true
+  pat: 
+    descriptions: 'Access token for Authorization'
+    default: ""
+    required: true
   owner: 
     description: 'GitHub owner'
     default: 'liatrio'
