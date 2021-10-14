@@ -4,8 +4,8 @@ runs:
   image: 'Dockerfile'
   env: 
     GITHUB_OWNER: ${{ inputs.owner }}
-    GITHUB_REPO:  ${{ inputs.repo  }}
-    TAG_NAME:     ${{ inputs.tag_name }}
+    GITHUB_REPO: ${{ inputs.repo  }}
+    TAG_NAME: ${{ inputs.tag_name }}
 
 description: 'Create a GitHub release'
 inputs: 
