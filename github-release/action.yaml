@@ -1,0 +1,53 @@
+name: 'Create GitHub Release'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env: 
+    GITHUB_OWNER: ${{ inputs.owner }}
+    GITHUB_REPO:  ${{ inputs.repo  }}
+    TAG_NAME:     ${{ inputs.tag_name }}
+
+description: 'Create a GitHub release'
+inputs: 
+  accept:
+    description: ''
+    default: 'application/vnd.github.v3+json'
+    required: false
+  owner: 
+    description: 'GitHub owner'
+    default: 'liatrio'
+    required: true
+  repo: 
+    description: 'GitHub repo to create a release on'
+    default: ""
+    required: true
+  tag_name:
+    description: 'The name of the tag'
+    default: ""
+    required: true
+  name:
+    description: 'The name of the release'
+    default: ""
+    required: true
+  body: 
+    description: 'The text describing the contents of the tag'
+    default: ""
+    required: false
+  draft:
+    description: '`true` to create a draft(unpublished) release, false to create a published one'
+    default: "false"
+    required: false
+  prerelease: 
+    description: 'true to identify the release as a prerelease. false to identify the release as a full release.'
+    default: "false"
+    required: false
+  discussion_category_name:
+    description: 'If specified, a discussion of the specified category is created and linked to the release. The value must be a category that already exists in the repository.'
+    default: ""
+    required: false
+  generate_release_notes:
+    description: 'Whether to automatically generate the name and body for this release.'
+    default: "false"
+    required: false 
+
+
