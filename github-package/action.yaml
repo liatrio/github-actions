@@ -5,7 +5,6 @@ runs:
   env: 
     GITHUB_REPOSITORY: ${{ inputs.GITHUB_REPOSITORY }}
     GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
-    GITHUB_OWNER: ${{ inputs.GITHUB_OWNER }}
 
 description: 'Deploy a binary artifact to Github Packages'
 inputs: 
@@ -17,11 +16,6 @@ inputs:
   GITHUB_REPOSITORY: 
     description: 'Github repo name'
     default: ""
-    required: true
-
-  GITHUB_OWNER:
-    description: 'Github owner'
-    default: 'liatrio'
     required: true
   
   FILE: 
