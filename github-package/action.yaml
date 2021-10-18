@@ -1,0 +1,33 @@
+name: 'Deploy artifact to Github Packages'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env: 
+    GITHUB_REPO: ${{ inputs.GITHUB_REPO }}
+    GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
+
+description: 'Deploy a binary artifact to Github Packages'
+inputs: 
+  GITHUB_TOKEN: 
+    description: 'Github token to authenticate with Github Packages'
+    default: ""
+    required: true
+
+  GITHUB_REPOSITORY: 
+    description: 'Github repo name'
+    default: ""
+    required: true
+
+  RELEASE_ID:
+    description: 'The ID of the release to create a package for'
+    default: ""
+    required: true
+
+  FILE: 
+    description: 'Binary file to upload to Github Packages'
+    default: ""
+    required: true
+
+  
+
+
