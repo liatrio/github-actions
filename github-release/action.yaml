@@ -11,16 +11,12 @@ runs:
 
 description: 'Create a GitHub release'
 inputs: 
-  Authorization:
-    description: 'Authenticate with your Github Repo'
-    default: ""
-    required: true
   token_name:
-    descriptions: 'Token name for Authorization'
+    description: 'Token name for Authorization'
     default: ""
     required: true
   pat: 
-    descriptions: 'Access token for Authorization'
+    description: 'Access token for Authorization'
     default: ""
     required: true
   owner: 
@@ -48,7 +44,7 @@ inputs:
     default: "false"
     required: false
   prerelease: 
-    description: 'true to identify the release as a prerelease. false to identify the release as a full release.'
+    description: '`true` to identify the release as a prerelease. false to identify the release as a full release.'
     default: "false"
     required: false
   discussion_category_name:
@@ -59,5 +55,3 @@ inputs:
     description: 'Whether to automatically generate the name and body for this release.'
     default: "false"
     required: false 
-
-

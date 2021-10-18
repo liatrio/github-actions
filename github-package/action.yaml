@@ -27,7 +27,3 @@ inputs:
     description: 'Binary file to upload to Github Packages'
     default: ""
     required: true
-
-  
-
-
