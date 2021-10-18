@@ -23,12 +23,7 @@ inputs:
     description: 'Github owner'
     default: 'liatrio'
     required: true
-      
-  RELEASE_ID:
-    description: 'The ID of the release to create a package for'
-    default: ""
-    required: true
-
+  
   FILE: 
     description: 'Binary file to upload to Github Packages'
     default: ""
