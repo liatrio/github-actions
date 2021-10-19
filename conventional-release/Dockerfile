@@ -8,6 +8,6 @@ RUN yarn install --production
 
 FROM node:${NODE_TAG}
 WORKDIR /action
-RUN apk add --no-cache git bash
+RUN apk add --no-cache git bash openssh
 COPY --from=builder /action .
 ENTRYPOINT ["/action/entrypoint.sh"]
