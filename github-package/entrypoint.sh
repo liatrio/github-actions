@@ -5,6 +5,8 @@ echo "FILE: ${FILE}"
 
 AUTH_HEADER="Authorization: token ${GITHUB_TOKEN}"
 
+echo "GITHUB_EVENT_PATH: $GITHUB_EVENT_PATH"
+
 RELEASE_ID=$(jq --raw-output '.release.id' "$GITHUB_EVENT_PATH")
 echo "RELEASE_ID: ${RELEASE_ID}"
 
