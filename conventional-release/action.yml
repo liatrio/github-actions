@@ -1,0 +1,17 @@
+name: Conventional Release
+description: Uses stuff and things
+inputs:
+  debug:
+    description: ""
+    required: false
+    default: ""
+  dryRun:
+    description: ""
+    required: false
+    default: ""
+runs:
+  using: docker
+  image: Dockerfile
+  env:
+    DEBUG: ${{ inputs.debug }}
+    DRY_RUN: ${{ inputs.dryRun }}
