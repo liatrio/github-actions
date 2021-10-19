@@ -28,6 +28,7 @@ echo "UPLOAD_URL: ${UPLOAD_URL}"
 #         ${UPLOAD_URL}
 
 pwd
+ls
 curl \
     -X POST \
     -H "Authorization: token $GITHUB_TOKEN" \
