@@ -19,7 +19,7 @@ fi
 currentVersion=$(git describe --tags --abbrev=0)
 output "currentVersion" "${currentVersion}"
 
-npx semantic-release "${flags[@]}"
+/action/node_modules/semantic-release/bin/semantic-release.js "${flags[@]}"
 
 newVersion=$(git describe --tags --abbrev=0)
 output "newVersion" "${newVersion}"
