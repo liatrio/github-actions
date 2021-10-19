@@ -16,8 +16,8 @@ if [ "${DEBUG}" ]; then
   flags+=(--debug)
 fi
 
-currentVersion=$(git describe --tags --abbrev=0)
-output "currentVersion" "${currentVersion}"
+previousVersion=$(git describe --tags --abbrev=0)
+output "previousVersion" "${previousVersion}"
 
 /action/node_modules/semantic-release/bin/semantic-release.js "${flags[@]}"
 
@@ -26,7 +26,7 @@ output "newVersion" "${newVersion}"
 
 changed="true"
 
-if [ "$currentVersion" == "$newVersion" ]; then
+if [ "$previousVersion" == "$newVersion" ]; then
   changed="false"
 fi
 
