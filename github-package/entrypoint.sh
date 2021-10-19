@@ -1,6 +1,7 @@
 #!/bin/sh -l
 
 FILENAME=$(basename "${FILE}")
+echo "FILE: ${FILE}"
 
 AUTH_HEADER="Authorization: token ${GITHUB_TOKEN}"
 

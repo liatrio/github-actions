@@ -5,6 +5,7 @@ runs:
   env: 
     GITHUB_REPOSITORY: ${{ inputs.GITHUB_REPOSITORY }}
     GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
+    FILE: ${{ inputs.FILE }}
 
 description: 'Deploy a binary artifact to Github Packages'
 inputs: 
