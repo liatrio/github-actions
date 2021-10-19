@@ -12,10 +12,12 @@ tmp=${mktemp}
 
 UPLOAD_URL="https://uploads.github.com/repos/${GITHUB_REPOSITORY}/releases/${RELEASE_ID}/assets?name=${FILENAME}"
 echo "UPLOAD_URL: ${UPLOAD_URL}"
+
+
 curl \
         -sSL \
         -X POST \
-        -H "${AUTH_HEADER}" \
+        -H "Authorization: token ${GITHUB_TOKEN}" \
         --upload-file "${FILE}" \
         --header "Content-Type:application/octet-stream" \
         --write-out "%{http_code}" \
