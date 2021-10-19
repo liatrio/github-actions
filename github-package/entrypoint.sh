@@ -17,12 +17,19 @@ UPLOAD_URL="https://uploads.github.com/repos/${GITHUB_REPOSITORY}/releases/${REL
 echo "UPLOAD_URL: ${UPLOAD_URL}"
 
 #upload binary file to release with associated release id
+# curl \
+#         -sSL \
+#         -XPOST \
+#         -H "Authorization: token ${GITHUB_TOKEN}" \
+#         --upload-file "${FILE}" \
+#         --header "Content-Type:application/octet-stream" \
+#         --write-out "%{http_code}" \
+#         --output $tmp \
+#         ${UPLOAD_URL}
+
+
 curl \
-        -sSL \
-        -XPOST \
-        -H "Authorization: token ${GITHUB_TOKEN}" \
-        --upload-file "${FILE}" \
-        --header "Content-Type:application/octet-stream" \
-        --write-out "%{http_code}" \
-        --output $tmp \
-        ${UPLOAD_URL}
+    -H "Authorization: token $GITHUB_TOKEN" \
+    -H "Content-Type: $(file -b --mime-type $FILE)" \
+    --data-binary @$FILE \
+    "https://uploads.github.com/repos/${GITHUB_REPOSITORY}/releases/${RELEASE_ID}/assets?name=$(basename $FILE)"
