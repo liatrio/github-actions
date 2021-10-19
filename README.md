@@ -144,3 +144,25 @@ jobs:
       run: |
         curl -H "Authorization: Bearer ${{ steps.token.outputs.accessToken }}" https://api.example.com/protected
 ```
+
+# conventional-release
+
+The actions wraps [semantic-release](https://github.com/semantic-release/semantic-release), which can be used to automatically 
+bump the version (based on [conventional commits](https://www.conventionalcommits.org/)), generate changelogs, and create GitHub releases.
+
+The repository should include a `semantic-release` [config file](https://github.com/semantic-release/semantic-release/blob/master/docs/usage/configuration.md#configuration)
+as there's likely a need to change the defaults for non-JavaScript projects. 
+
+```yaml
+jobs:
+  release:
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Release
+        uses: liatrio/github-actions/conventional-release@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
