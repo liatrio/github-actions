@@ -1,17 +1,17 @@
 name: Conventional Release
-description: Uses stuff and things
+description: Generates the next semantic version based on conventional commits, then creates a release and tag.
 inputs:
   debug:
-    description: ""
+    description: "Whether semantic-release should run in debug mode"
     required: false
     default: ""
   dryRun:
-    description: ""
+    description: "Controls if semantic-release performs the release"
     required: false
     default: ""
 runs:
   using: docker
-  image: Dockerfile
+  image: docker://ghcr.io/liatrio/github-actions/conventional-release:latest
   env:
     DEBUG: ${{ inputs.debug }}
     DRY_RUN: ${{ inputs.dryRun }}
