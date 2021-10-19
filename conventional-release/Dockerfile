@@ -7,6 +7,7 @@ RUN yarn install --production
 ###
 
 FROM node:${NODE_TAG}
+LABEL org.opencontainers.image.source=https://github.com/liatrio/github-actions
 WORKDIR /action
 RUN apk add --no-cache git bash openssh
 COPY --from=builder /action .
