@@ -27,7 +27,7 @@ echo "UPLOAD_URL: ${UPLOAD_URL}"
 #         --output $tmp \
 #         ${UPLOAD_URL}
 
-
+cd /home/runner/work/mobile-pipeline-poc/mobile-pipeline-poc
 curl \
     -X POST \
     -H "Authorization: token $GITHUB_TOKEN" \
