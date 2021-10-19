@@ -21,7 +21,7 @@ curl \
         -sSL \
         -XPOST \
         -H "Authorization: token ${GITHUB_TOKEN}" \
-        --upload-file ${FILE} \
+        --upload-file "${FILE}" \
         --header "Content-Type:application/octet-stream" \
         --write-out "%{http_code}" \
         --output $tmp \
