@@ -29,9 +29,10 @@ echo "UPLOAD_URL: ${UPLOAD_URL}"
 
 pwd
 ls
+
 curl \
     -X POST \
     -H "Authorization: token $GITHUB_TOKEN" \
     -H "Content-Type:application/octet-stream" \
-    --upload-file "${FILE}" \
+    --upload-file "{${FILE}}" \
     "https://uploads.github.com/repos/${GITHUB_REPOSITORY}/releases/${RELEASE_ID}/assets?name=$(basename $FILE)"
