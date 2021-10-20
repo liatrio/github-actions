@@ -8,15 +8,15 @@ inputs:
     description: 'GitHub personal access token (PAT)'
     required: true
   commit-prefix:
-    description: 'Prefixed to the git commit message'
+    description: 'Prepended to the git commit message'
     required: false
     default: 'gitops'
   git-email:
-    description: 'Git'
+    description: 'Email address to set as user.email'
     required: false
     default: 'gitops@liatr.io'
   git-name:
-    description: 'Git'
+    description: 'Name to set as user.name'
     required: false
     default: 'GitOps Automation'
   message:

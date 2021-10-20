@@ -8,14 +8,12 @@ git config --local user.email "${GIT_EMAIL}"
 git config --local user.name "${GIT_NAME}"
 
 BASE_BRANCH=$(git branch --show-current)
-echo "BASE_BRANCH? ${BASE_BRANCH}"
 BRANCH="gitops-$(git rev-parse --short HEAD)"
 
 # Check for an existing pull request
 OPEN_PRS=$(gh pr list --base "$BASE_BRANCH" --head "$BRANCH" -q 'length' --json url)
-echo "OPEN_PRS? ${OPEN_PRS}"
 if [ "${OPEN_PRS}" = "1" ]; then
-  echo "Skipping PR creation because there's a pull request already exists."
+  echo "Skipping PR creation because a pull request already exists."
   exit 0
 fi
 
