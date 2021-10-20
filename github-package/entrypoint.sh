@@ -5,6 +5,7 @@ IOS_FILENAME=$(basename "${IOS_FILE}")
 echo "ANDROID_FILE: ${ANDROID_FILENAME}"
 echo "IOS_FILE: ${IOS_FILENAME}"
 
+
 AUTH_HEADER="Authorization: token ${GITHUB_TOKEN}"
 
 # Get the latest release id, store in temporary file
@@ -30,7 +31,7 @@ echo "UPLOAD_URL: ${UPLOAD_URL}"
 #         ${UPLOAD_URL}
 
 pwd
-ls
+ls -la
 
 curl \
     -X POST \
