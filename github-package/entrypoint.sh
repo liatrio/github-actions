@@ -2,8 +2,8 @@
 
 ANDROID_FILENAME=$(basename "${ANDROID_FILE}")
 IOS_FILENAME=$(basename "${IOS_FILE}")
-echo "ANDROID_FILE: ${ANDROID_FILE}"
-echo "IOS_FILE: ${IOS_FILE}"
+echo "ANDROID_FILE: ${ANDROID_FILENAME}"
+echo "IOS_FILE: ${IOS_FILENAME}"
 
 AUTH_HEADER="Authorization: token ${GITHUB_TOKEN}"
 
@@ -36,5 +36,12 @@ curl \
     -X POST \
     -H "Authorization: token $GITHUB_TOKEN" \
     -H "Content-Type:application/octet-stream" \
-    --upload-file "{${FILE}}" \
-    "https://uploads.github.com/repos/${GITHUB_REPOSITORY}/releases/${RELEASE_ID}/assets?name=${ANDROID_FILENAME},${IOS_FILENAME})"
+    --upload-file "{${ANDROID_FILENAME}}" \
+    "https://uploads.github.com/repos/${GITHUB_REPOSITORY}/releases/${RELEASE_ID}/assets?name=${ANDROID_FILENAME}"
+
+curl \
+    -X POST \
+    -H "Authorization: token $GITHUB_TOKEN" \
+    -H "Content-Type:application/octet-stream" \
+    --upload-file "{${IOS_FILENAME}}" \
+    "https://uploads.github.com/repos/${GITHUB_REPOSITORY}/releases/${RELEASE_ID}/assets?name=${IOS_FILENAME}"
