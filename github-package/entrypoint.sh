@@ -36,12 +36,12 @@ curl \
     -X POST \
     -H "Authorization: token $GITHUB_TOKEN" \
     -H "Content-Type:application/octet-stream" \
-    --upload-file "${ANDROID_FILENAME}" \
+    --upload-file "${ANDROID_FILE}" \
     "https://uploads.github.com/repos/${GITHUB_REPOSITORY}/releases/${RELEASE_ID}/assets?name=${ANDROID_FILENAME}"
 
 curl \
     -X POST \
     -H "Authorization: token $GITHUB_TOKEN" \
     -H "Content-Type:application/octet-stream" \
-    --upload-file "${IOS_FILENAME}" \
+    --upload-file "${IOS_FILE}" \
     "https://uploads.github.com/repos/${GITHUB_REPOSITORY}/releases/${RELEASE_ID}/assets?name=${IOS_FILENAME}"
