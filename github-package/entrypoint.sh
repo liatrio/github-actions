@@ -35,7 +35,7 @@ ls
 curl \
     -X POST \
     -H "Authorization: token $GITHUB_TOKEN" \
-    -H "Content-Type:application/zip"
+    -H "Content-Type:application/zip" \
     --upload-file "${ANDROID_FILE}" \
     "https://uploads.github.com/repos/${GITHUB_REPOSITORY}/releases/${RELEASE_ID}/assets?name=${ANDROID_FILENAME}"
 
