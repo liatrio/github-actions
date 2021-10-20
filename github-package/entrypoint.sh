@@ -1,7 +1,9 @@
 #!/bin/sh -l
 
-FILENAME=$(basename "${FILE}")
-echo "FILE: ${FILE}"
+ANDROID_FILENAME=$(basename "${ANDROID_FILE}")
+IOS_FILENAME=$(basename "${IOS_FILE}")
+echo "ANDROID_FILE: ${ANDROID_FILE}"
+echo "IOS_FILE: ${IOS_FILE}"
 
 AUTH_HEADER="Authorization: token ${GITHUB_TOKEN}"
 
@@ -13,7 +15,7 @@ echo "RELEASE_ID: ${RELEASE_ID}"
 
 tmp=${mktemp}
 
-UPLOAD_URL="https://uploads.github.com/repos/${GITHUB_REPOSITORY}/releases/${RELEASE_ID}/assets?name=${FILENAME}"
+UPLOAD_URL="https://uploads.github.com/repos/${GITHUB_REPOSITORY}/releases/${RELEASE_ID}/assets?name=${ANDROID_FILENAME},${IOS_FILENAME}"
 echo "UPLOAD_URL: ${UPLOAD_URL}"
 
 #upload binary file to release with associated release id
@@ -35,4 +37,4 @@ curl \
     -H "Authorization: token $GITHUB_TOKEN" \
     -H "Content-Type:application/octet-stream" \
     --upload-file "{${FILE}}" \
-    "https://uploads.github.com/repos/${GITHUB_REPOSITORY}/releases/${RELEASE_ID}/assets?name=$(basename $FILE)"
+    "https://uploads.github.com/repos/${GITHUB_REPOSITORY}/releases/${RELEASE_ID}/assets?name=${ANDROID_FILENAME},${IOS_FILENAME})"

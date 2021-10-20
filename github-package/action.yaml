@@ -5,7 +5,8 @@ runs:
   env: 
     GITHUB_REPOSITORY: ${{ inputs.GITHUB_REPOSITORY }}
     GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
-    FILE: ${{ inputs.FILE }}
+    ANDROID_FILE: ${{ inputs.ANDROID_FILE }}
+    IOS_FILE: ${{ inputs.IOS_FILE }}
 
 description: 'Deploy a binary artifact to Github Packages'
 inputs: 
@@ -19,7 +20,12 @@ inputs:
     default: ""
     required: true
   
-  FILE: 
-    description: 'Binary file to upload to Github Packages'
+  ANDROID_FILE: 
+    description: 'Android specific binary file to upload to Github Packages'
+    default: ""
+    required: true
+
+  IOS_FILE: 
+    description: 'IOS specific binary file to upload to Github Packages'
     default: ""
     required: true
