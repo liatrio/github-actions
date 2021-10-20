@@ -18,7 +18,7 @@ inputs:
   git-name:
     description: 'Git'
     required: false
-    default: ''
+    default: 'GitOps Automation'
   message:
     description: 'Git commit message'
     required: true
