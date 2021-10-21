@@ -32,7 +32,7 @@ echo "UPLOAD_URL: ${UPLOAD_URL}"
 
 pwd
 ls android-artifact
-ls ios-aritfact
+ls ios-artifact
 
 curl \
     -X POST \
