@@ -10,4 +10,4 @@ FROM node:${NODE_TAG}
 LABEL org.opencontainers.image.source=https://github.com/liatrio/github-actions
 WORKDIR /action
 COPY --from=builder /action .
-ENTRYPOINT ["node", "index.js"]
+ENTRYPOINT ["node", "/action/index.js"]
