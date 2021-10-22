@@ -8,10 +8,10 @@ runs:
     ANDROID_FILE: ${{ inputs.ANDROID_FILE }}
     IOS_FILE: ${{ inputs.IOS_FILE }}
 
-description: 'Deploy a binary artifact to Github Packages'
+description: 'Deploy a binary artifact to Github Releases'
 inputs: 
   GITHUB_TOKEN: 
-    description: 'Github token to authenticate with Github Packages'
+    description: 'Github token to authenticate with Github'
     default: ""
     required: true
 
@@ -20,12 +20,7 @@ inputs:
     default: ""
     required: true
   
-  ANDROID_FILE: 
-    description: 'Android specific binary file to upload to Github Packages'
-    default: ""
-    required: true
-
-  IOS_FILE: 
-    description: 'IOS specific binary file to upload to Github Packages'
+  FILE: 
+    description: 'Binary file to upload to Github Releases'
     default: ""
     required: true
