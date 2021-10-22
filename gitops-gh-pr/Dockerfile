@@ -1,4 +1,4 @@
-FROM alpine:3.13.5
+FROM alpine:3.14.2
 
 RUN apk add github-cli --no-cache 
 
