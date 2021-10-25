@@ -6,7 +6,7 @@ runs:
     GITHUB_REPOSITORY: ${{ inputs.GITHUB_REPOSITORY }}
     GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
     ANDROID_FILE: ${{ inputs.ANDROID_FILE }}
-    IOS_FILE: ${{ inputs.IOS_FILE }}
+    FILE: ${{ inputs.FILE }}
 
 description: 'Deploy a binary artifact to Github Releases'
 inputs: 
