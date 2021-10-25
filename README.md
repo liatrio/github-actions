@@ -166,3 +166,21 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
+
+# conventional-pr-title
+
+A GitHub Action for enforcing that pull request titles use [conventional commit prefixes](https://www.conventionalcommits.org/en/v1.0.0/).
+By default, the action uses the conventional commit preset list (minus `chore:`), but that can be overwritten by passing the `prefixes` input.
+
+For pull requests with a single commit, the action will check that the commit uses an allowed prefix. This is because GitHub
+uses the commit message instead of the pull request title as the default text in the squash merge dialog when the branch only has a single commit.
+
+```yaml
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: liatrio/github-actions/conventional-pr-title@master
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+```

@@ -1,4 +1,4 @@
-name: Conventional Pull Request Titles
+name: Conventional Pull Request Title
 description: Enforces that pull request titles use conventional commit prefixes
 inputs:
   token:
