@@ -4,6 +4,10 @@ inputs:
   url:
     description: 'URL of git repo to push a change to'
     required: true
+  base_branch:
+    description: 'Git base branch'
+    required: false
+    default: 'master'
   username:
     description: 'Username for pushing to url'
     required: true
@@ -18,9 +22,10 @@ inputs:
     required: true
 runs:
   using: 'docker'
-  image: 'docker://liatrio/gitty-up:0.1.4'
+  image: 'docker://liatrio/gitty-up:0.1.5'
   env:
     GITOPS_GIT_URL: ${{ inputs.url }}
+    GITOPS_GIT_BASE_BRANCH: ${{ inputs.base_branch }}
     GITOPS_GIT_USERNAME: ${{ inputs.username }}
     GITOPS_GIT_PASSWORD: ${{ inputs.password }}
     GITOPS_REPO_FILE: ${{ inputs.file }}
