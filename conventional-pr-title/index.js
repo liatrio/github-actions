@@ -55,8 +55,7 @@ const validate = (prefixes, message) => {
         }
 
         core.info('Single commit pull request, validating that the only commit uses prefixes');
-        console.log(commits.data[0]);
-        validate(commits.data[0].commit.message);
+        validate(prefixes, commits.data[0].commit.message);
     } catch (error) {
         fail(`Error validating pull request title: ${error.stack}`);
     }
