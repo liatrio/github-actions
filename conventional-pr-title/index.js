@@ -49,7 +49,8 @@ const validate = (prefixes, message) => {
             pull_number: number,
         });
 
-        if (commits.length !== 1) {
+        if (commits.length > 1) {
+            core.info('Skipping commit check since there are multiple commits');
             return;
         }
 
