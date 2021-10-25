@@ -48,15 +48,14 @@ const validate = (prefixes, message) => {
             repo,
             pull_number: number,
         });
-        console.log('???', commits);
 
-        if (commits.length > 1) {
+        if (commits.data.length > 1) {
             core.info('Skipping commit check since there are multiple commits');
             return;
         }
 
         core.info('Single commit pull request, validating that the only commit uses prefixes');
-        validate(commits[0].commit.message);
+        validate(commits.data[0].commit.message);
     } catch (error) {
         fail(`Error validating pull request title: ${error.stack}`);
     }
