@@ -174,6 +174,7 @@ By default, the action uses the conventional commit preset list (minus `chore:`)
 
 For pull requests with a single commit, the action will check that the commit uses an allowed prefix. This is because GitHub
 uses the commit message instead of the pull request title as the default text in the squash merge dialog when the branch only has a single commit.
+Note that this action should be used with repositories that only permit squash merge; this will help enforce that only conventional commit prefixes land in the target branch. 
 
 ```yaml
 jobs:
