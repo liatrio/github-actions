@@ -1,0 +1,25 @@
+name: Conventional Pull Request Title
+description: Enforces that pull request titles use conventional commit prefixes
+inputs:
+  token:
+    description: "GitHub API token. Used to query for pull request commits."
+    required: true
+  prefixes:
+    description: "The set of allowed pull request title prefixes."
+    required: true
+    default: |
+      feat
+      fix
+      docs
+      style
+      refactor
+      perf
+      test
+      build
+      ci
+      revert
+runs:
+  using: docker
+  image: Dockerfile
+  env:
+    GITHUB_TOKEN: ${{ inputs.token }}
