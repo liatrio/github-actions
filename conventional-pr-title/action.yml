@@ -20,6 +20,6 @@ inputs:
       revert
 runs:
   using: docker
-  image: Dockerfile
+  image: docker://ghcr.io/liatrio/github-actions/conventional-pr-title:latest
   env:
     GITHUB_TOKEN: ${{ inputs.token }}
