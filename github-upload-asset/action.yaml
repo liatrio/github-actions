@@ -1,11 +1,12 @@
-name: 'Deploy artifact to Github Packages'
+name: 'Upload Github release asset'
 runs:
   using: 'docker'
   image: 'Dockerfile'
   env: 
     GITHUB_REPOSITORY: ${{ inputs.GITHUB_REPOSITORY }}
     GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
-    ANDROID_FILE: ${{ inputs.ANDROID_FILE }}
+    ORG_OWNER: ${{ inputs.ORG_OWNER }}
+    RELEASE: ${{ inputs.RELEASE }}
     FILE: ${{ inputs.FILE }}
 
 description: 'Deploy a binary artifact to Github Releases'
@@ -19,8 +20,18 @@ inputs:
     description: 'Github repo name'
     default: ""
     required: true
+    
+  ORG_OWNER: 
+    description: 'Github orginization owner'
+    default: 'liatrio'
+    required: false
   
   FILE: 
     description: 'Binary file to upload to Github Releases'
     default: ""
     required: true
+
+  RELEASE:
+    description: 'Release name'
+    default: 'latest'
+    required: false

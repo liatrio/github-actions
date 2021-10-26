@@ -5,9 +5,15 @@ runs:
   env: 
     GITHUB_OWNER: ${{ inputs.owner }}
     GITHUB_REPO: ${{ inputs.repo  }}
-    TAG_NAME: ${{ inputs.tag_name }}
     TOKEN_NAME: ${{ inputs.token_name }}
     PAT: ${{ inputs.pat }}
+    TAG_NAME: ${{ inputs.tag_name }}
+    NAME: ${{ inputs.name }}
+    BODY: ${{ inputs.body }}
+    DRAFT: ${{ inputs.draft }}
+    PRERELEASE: ${{ inputs.prerelease }}
+    DISCUSSION_CATEGORY_NAME: ${{ inputs.discussion_category_name }}
+    GENERAL_RELEASE_NOTES: ${{ inputs.generate_release_notes }}
 
 description: 'Create a GitHub release'
 inputs: 
@@ -34,7 +40,7 @@ inputs:
   name:
     description: 'The name of the release'
     default: ""
-    required: true
+    required: false
   body: 
     description: 'The text describing the contents of the tag'
     default: ""
