@@ -1,0 +1,63 @@
+name: 'Create GitHub Release'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env: 
+    GITHUB_OWNER: ${{ inputs.owner }}
+    GITHUB_REPO: ${{ inputs.repo  }}
+    TOKEN_NAME: ${{ inputs.token_name }}
+    PAT: ${{ inputs.pat }}
+    TAG_NAME: ${{ inputs.tag_name }}
+    NAME: ${{ inputs.name }}
+    BODY: ${{ inputs.body }}
+    DRAFT: ${{ inputs.draft }}
+    PRERELEASE: ${{ inputs.prerelease }}
+    DISCUSSION_CATEGORY_NAME: ${{ inputs.discussion_category_name }}
+    GENERAL_RELEASE_NOTES: ${{ inputs.generate_release_notes }}
+
+description: 'Create a GitHub release'
+inputs: 
+  token_name:
+    description: 'Token name for Authorization'
+    default: ""
+    required: true
+  pat: 
+    description: 'Access token for Authorization'
+    default: ""
+    required: true
+  owner: 
+    description: 'GitHub owner'
+    default: 'liatrio'
+    required: true
+  repo: 
+    description: 'GitHub repo to create a release on'
+    default: ""
+    required: true
+  tag_name:
+    description: 'The name of the tag'
+    default: ""
+    required: true
+  name:
+    description: 'The name of the release'
+    default: ""
+    required: false
+  body: 
+    description: 'The text describing the contents of the tag'
+    default: ""
+    required: false
+  draft:
+    description: '`true` to create a draft(unpublished) release, false to create a published one'
+    default: "false"
+    required: false
+  prerelease: 
+    description: '`true` to identify the release as a prerelease. false to identify the release as a full release.'
+    default: "false"
+    required: false
+  discussion_category_name:
+    description: 'If specified, a discussion of the specified category is created and linked to the release. The value must be a category that already exists in the repository.'
+    default: ""
+    required: false
+  generate_release_notes:
+    description: 'Whether to automatically generate the name and body for this release.'
+    default: "false"
+    required: false 
