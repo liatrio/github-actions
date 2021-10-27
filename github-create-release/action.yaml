@@ -47,11 +47,11 @@ inputs:
     required: false
   draft:
     description: '`true` to create a draft(unpublished) release, false to create a published one'
-    default: ""
+    default: "false"
     required: false
   prerelease: 
     description: '`true` to identify the release as a prerelease. false to identify the release as a full release.'
-    default: ""
+    default: "false"
     required: false
   discussion_category_name:
     description: 'If specified, a discussion of the specified category is created and linked to the release. The value must be a category that already exists in the repository.'
@@ -59,5 +59,5 @@ inputs:
     required: false
   generate_release_notes:
     description: 'Whether to automatically generate the name and body for this release.'
-    default: ""
+    default: "false"
     required: false 
