@@ -13,7 +13,7 @@ runs:
     DRAFT: ${{ inputs.draft }}
     PRERELEASE: ${{ inputs.prerelease }}
     DISCUSSION_CATEGORY_NAME: ${{ inputs.discussion_category_name }}
-    GENERAL_RELEASE_NOTES: ${{ inputs.generate_release_notes }}
+    GENERATE_RELEASE_NOTES: ${{ inputs.generate_release_notes }}
 
 description: 'Create a GitHub release'
 inputs: 
