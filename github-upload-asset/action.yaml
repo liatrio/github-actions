@@ -33,5 +33,5 @@ inputs:
 
   RELEASE:
     description: 'Release name'
-    default: 'Latest'
+    default: 'latest'
     required: false
