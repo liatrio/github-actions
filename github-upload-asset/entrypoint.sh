@@ -4,7 +4,7 @@ FILENAME=$(basename "${FILE}")
 echo "FILE: ${FILENAME}"
 
 # Get the latest release id, store in temporary file
-curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/${ORG_OWNER}/${GITHUB_REPOSITORY}/releases/${RELEASE} > temp.json
+curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/${ORG_OWNER}/${GITHUB_REPOSITORY}/releases/latest > temp.json
 
 cat temp.json
 
