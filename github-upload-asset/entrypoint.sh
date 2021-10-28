@@ -7,10 +7,10 @@ echo "FILE: ${FILENAME}"
 curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/${ORG_OWNER}/${GITHUB_REPOSITORY}/releases/${RELEASE} > temp.json
 
 RELEASE_ID=$(jq --raw-output '.id' "temp.json")
-echo "RELEASE_ID: ${RELEASE_ID}"
+echo "RELEASE_ID: ${RELEASE}"
 
 
-UPLOAD_URL="https://uploads.github.com/repos/${GITHUB_REPOSITORY}/releases/${RELEASE_ID}/assets?name=${FILENAME}"
+UPLOAD_URL="https://uploads.github.com/repos/${GITHUB_REPOSITORY}/releases/${RELEASE}/assets?name=${FILENAME}"
 echo "UPLOAD_URL: ${UPLOAD_URL}"
 
 curl \
