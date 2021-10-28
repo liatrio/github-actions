@@ -3,7 +3,7 @@
 FILENAME=$(basename "${FILE}")
 echo "FILE: ${FILENAME}"
 echo "ORG_OWNER: ${ORG_OWNER}"
-echo "GITHUB_REPOSITORY: ${GITHUB_REPOS}"
+echo "GITHUB_REPOSITORY: ${GITHUB_REPO}"
 
 # Get the latest release id, store in temporary file
 curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/${ORG_OWNER}/${GITHUB_REPO}/releases/latest > temp.json
