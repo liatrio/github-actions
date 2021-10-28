@@ -9,9 +9,8 @@ curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/${
 RELEASE_ID=$(jq --raw-output '.id' "temp.json")
 echo "RELEASE_ID: ${RELEASE_ID}"
 
-tmp=${mktemp}
 
-UPLOAD_URL="https://uploads.github.com/repos/${GITHUB_REPOSITORY}/releases/${RELEASE_ID}/assets?name=${FILE}"
+UPLOAD_URL="https://uploads.github.com/repos/${GITHUB_REPOSITORY}/releases/${RELEASE_ID}/assets?name=${FILENAME}"
 echo "UPLOAD_URL: ${UPLOAD_URL}"
 
 curl \
