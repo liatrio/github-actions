@@ -1,7 +1,6 @@
 #!/bin/sh -l
 
 FILENAME=$(basename "${FILE}")
-echo "GITHUB_REPOSITORY: ${REPO}"
 
 # Get the latest release id, store in temporary file
 curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/${ORG_OWNER}/${REPO}/releases/latest > temp.json
