@@ -1,8 +1,4 @@
 #!/bin/sh -l
-echo "Draft: $DRAFT"
-echo "Prerelease: $PRERELEASE"
-echo "Generate_Release_Notes: $GENERATE_RELEASE_NOTES"
-echo "Tag_name: $TAG_NAME"
 curl \
   -X POST \
   -H "Authorization: $TOKEN_NAME $PAT" \
