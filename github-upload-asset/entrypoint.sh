@@ -11,7 +11,7 @@ RELEASE_ID=$(jq --raw-output '.id' "temp.json")
 echo "RELEASE_ID: ${RELEASE_ID}"
 
 
-UPLOAD_URL="https://uploads.github.com/repos/${REPO}/releases/${RELEASE_ID}/assets?name=${FILENAME}"
+UPLOAD_URL="https://uploads.github.com/repos/${ORG_OWNER}/${REPO}/releases/${RELEASE_ID}/assets?name=${FILENAME}"
 echo "UPLOAD_URL: ${UPLOAD_URL}"
 
 curl \
