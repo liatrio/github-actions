@@ -19,4 +19,4 @@ curl \
     -H "Content-Type:application/octet-stream" \
     --upload-file "${FILE}" \
     ${UPLOAD_URL} \
-    --false
+    --fail
