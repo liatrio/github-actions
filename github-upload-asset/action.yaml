@@ -3,7 +3,7 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   env: 
-    GITHUB_REPOSITORY: ${{ inputs.GITHUB_REPOSITORY }}
+    REPO: ${{ inputs.REPO }}
     GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
     ORG_OWNER: ${{ inputs.ORG_OWNER }}
     RELEASE: ${{ inputs.RELEASE }}
@@ -16,7 +16,7 @@ inputs:
     default: ""
     required: true
 
-  GITHUB_REPOSITORY: 
+  REPO: 
     description: 'Github repo name'
     default: ""
     required: true
