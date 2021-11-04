@@ -6,7 +6,6 @@ curl \
   -d '{"'"tag_name"'":"'"$TAG_NAME"'", "'"name"'":"'"$NAME"'", "'"body"'":"'"$BODY"'", "'"draft"'":'$DRAFT', "'"prerelease"'":'$PRERELEASE', "'"discussion_category_name"'":"'"$DISCUSSION_CATEGORY_NAME"'",
         "'"generate_release_notes"'":'$GENERATE_RELEASE_NOTES'}' \
   --fail \
-  -v \
-  --trace 
+  -v 
 
   
