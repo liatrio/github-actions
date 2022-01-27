@@ -9,6 +9,7 @@ inputs:
     required: true
     default: |
       feat
+      feat!
       fix
       docs
       style
