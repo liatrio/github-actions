@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@semantic-release/commit-analyzer": "^9.0.1",
-    "@semantic-release/github": "^8.0.1",
-    "@semantic-release/release-notes-generator": "^10.0.2",
+    "@liatrio/semantic-release-helm": "^2.0.0",
+    "@semantic-release/git": "^10.0.1",
     "conventional-changelog-conventionalcommits": "^4.6.1",
     "semantic-release": "^18.0.0"
   }
