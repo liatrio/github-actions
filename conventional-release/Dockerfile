@@ -1,14 +1,28 @@
 ARG NODE_TAG=16-alpine
 FROM node:${NODE_TAG} as builder
+
 WORKDIR /action
+
 COPY entrypoint.sh package.json yarn.lock ./
+
 RUN yarn install --production
 
 ###
 
 FROM node:${NODE_TAG}
 LABEL org.opencontainers.image.source=https://github.com/liatrio/github-actions
+
 WORKDIR /action
-RUN apk add --no-cache git bash openssh
+
+RUN apk add --no-cache git bash openssh curl
+
+ENV HELM_VERSION 3.8.0
+RUN curl -f -L https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz | tar -zx && \
+  chmod +x linux-amd64/helm && \
+  mv linux-amd64/helm /usr/bin && \
+  rm -rf linux-amd64 && \
+  helm version
+
 COPY --from=builder /action .
+
 ENTRYPOINT ["/action/entrypoint.sh"]
