@@ -1,7 +1,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 const Mocha = require('mocha')
-const fs = require('fs');
+const fs = require('fs/promises');
 const util = require('util')
 const path = require('path');
 
@@ -12,10 +12,9 @@ const fail = (message) => {
 
 (async () => {
     try { 
-        const readdir = util.promisify(fs.readdir)
         const mocha = new Mocha();
         const testDir = 'tests/'
-        const files = await readdir(testDir)
+        const files = await fs.readdir(testDir)
 
         files
             .filter(file => {
