@@ -194,3 +194,14 @@ It will ensure that your application has the expected behaviour.
 ### How to use
 1. Import the action to your Workflow
 2. Launch your workflow and verify that the tests pass
+
+```yaml
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: run unit tests
+      uses: liatrio/github-actions/apprentice-action@apprentice-action
+      with:
+        app_port: 80
+```
