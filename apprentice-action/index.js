@@ -14,7 +14,7 @@ const fail = (message) => {
         const mocha = new Mocha();
         const testDir = 'tests/'
 
-        fs.readdirSync(testDir)
+        await fs.readdir(testDir)
             .filter(file => {
                 return path.extname(file) === '.js'
             })
