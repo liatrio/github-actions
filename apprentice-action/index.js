@@ -2,6 +2,7 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const Mocha = require('mocha')
 const fs = require('fs');
+const util = require('util')
 const path = require('path');
 
 const fail = (message) => {
@@ -11,10 +12,12 @@ const fail = (message) => {
 
 (async () => {
     try { 
+        const readdir = util.promisify(fs.readdir)
         const mocha = new Mocha();
         const testDir = 'tests/'
+        const files = await readdir(testDir)
 
-        await fs.readdir(testDir)
+        files
             .filter(file => {
                 return path.extname(file) === '.js'
             })

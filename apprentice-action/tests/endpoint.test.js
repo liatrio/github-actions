@@ -27,4 +27,4 @@ describe('Tests to the "/" endpoint', () => {
         const res = await axios('http://localhost:80/')
         expect(res.data.Timestamp).to.not.be.NaN();
     })
-});
+});    
