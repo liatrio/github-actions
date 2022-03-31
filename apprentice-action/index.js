@@ -23,7 +23,9 @@ const fail = (message) => {
             })
 
         mocha.run( failures => {
-            fail('Unable to run tests')
+            if(failures) {
+                fail("Tests resulted in failures... Make sure you're running your app on port 80")
+            }
         })
     } catch (error) {
         fail(`Error validating app: ${error.stack}`);
