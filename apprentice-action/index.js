@@ -1,9 +1,7 @@
-const core = require('@actions/core');
-const github = require('@actions/github');
-const Mocha = require('mocha')
-const fs = require('fs/promises');
-const util = require('util')
-const path = require('path');
+const core = require("@actions/core");
+const Mocha = require("mocha");
+const fs = require("fs/promises");
+const path = require("path");
 
 const fail = (message) => {
     core.setFailed(message);
@@ -11,24 +9,22 @@ const fail = (message) => {
 };
 
 (async () => {
-    try { 
+    try {
         const mocha = new Mocha();
-        const testDir = 'tests/'
-        const files = await fs.readdir(testDir)
+        const testDir = "tests/";
+        const files = await fs.readdir(testDir);
 
         files
-            .filter(file => {
-                return path.extname(file) === '.js'
-            })
-            .forEach(file => {
-                mocha.addFile(path.join(testDir, file))
-            })
+            .filter((file) => path.extname(file) === ".js")
+            .forEach((file) => {
+                mocha.addFile(path.join(testDir, file));
+            });
 
-        mocha.run( failures => {
-            if(failures) {
-                fail("Tests resulted in failures... Make sure you're running your app on port 80")
+        mocha.run((failures) => {
+            if (failures) {
+                fail("Tests resulted in failures... Make sure you're running your app on port 80");
             }
-        })
+        });
     } catch (error) {
         fail(`Error validating app: ${error.stack}`);
     }

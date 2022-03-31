@@ -1,9 +1,10 @@
 ARG NODE_TAG=14-alpine
 FROM node:${NODE_TAG} as builder
 WORKDIR /action
-COPY tests/ ./tests
-COPY package.json yarn.lock index.js ./
+COPY package.json yarn.lock ./
 RUN yarn install --production
+COPY index.js ./
+COPY tests/ ./tests
 
 ###
 
