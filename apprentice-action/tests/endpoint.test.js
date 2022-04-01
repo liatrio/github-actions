@@ -19,7 +19,7 @@ describe("Tests to the \"/\" endpoint", () => {
 
     it("should return a Message saying \"My name is ...\"", async () => {
         const res = await axios("http://host.docker.internal:80/");
-        expect(res.data.Message).to.contain("My name is");
+        expect(res.data.message).to.contain("My name is");
     });
 
     it("should return a UNIX style timestamp (numerical values only)", async () => {
