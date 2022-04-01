@@ -1,0 +1,14 @@
+root: true
+env:
+  es2021: true
+  node: true
+  "jest/globals": true
+extends:
+  - "@liatrio/eslint-config"
+parserOptions:
+  ecmaVersion: 11
+rules:
+  "security/detect-non-literal-fs-filename": off
+  "unicorn/prevent-abbreviations": off
+  "no-process-exit": off
+  "unicorn/no-process-exit": off

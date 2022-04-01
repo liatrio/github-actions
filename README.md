@@ -185,3 +185,22 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 ```
+
+# apprentice-action 
+
+This action will execute some endpoint tests (HTTP calls) against your application.
+It will ensure that your application has the expected behaviour.
+This action defaults to testing port 80.
+
+### How to use
+1. Import the action to your Workflow
+2. Launch your workflow and verify that the tests pass
+
+```yaml
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: run unit tests
+      uses: liatrio/github-actions/apprentice-action@apprentice-action
+```
