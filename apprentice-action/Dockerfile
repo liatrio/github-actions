@@ -1,4 +1,4 @@
-ARG NODE_TAG=14-alpine
+ARG NODE_TAG=16-alpine
 FROM node:${NODE_TAG} as builder
 WORKDIR /action
 COPY package.json yarn.lock ./
