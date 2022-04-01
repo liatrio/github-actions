@@ -202,6 +202,4 @@ jobs:
     steps:
     - name: run unit tests
       uses: liatrio/github-actions/apprentice-action@apprentice-action
-      with:
-        app_port: 80
 ```
