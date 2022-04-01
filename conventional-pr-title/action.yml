@@ -18,6 +18,7 @@ inputs:
       build
       ci
       revert
+      chore
 runs:
   using: docker
   image: docker://ghcr.io/liatrio/github-actions/conventional-pr-title:latest
