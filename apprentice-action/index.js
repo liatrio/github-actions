@@ -12,7 +12,7 @@ const fail = (message) => {
     try {
         const mocha = new Mocha();
         const testDir = "tests/";
-        const files = await fs.readdir(testDir);
+        const files = await fs.readdir(path.join(__dirname, testDir));
 
         files
             .filter((file) => path.extname(file) === ".js")
