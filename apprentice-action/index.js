@@ -16,6 +16,8 @@ const fail = (message) => {
 
         // eslint-disable-next-line no-console
         console.log(files);
+        // eslint-disable-next-line no-console
+        console.log(await fs.readdir(__dirname));
 
         files
             .filter((file) => path.extname(file) === ".js")
