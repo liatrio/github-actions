@@ -16,6 +16,7 @@ const fail = (message) => {
 
         // eslint-disable-next-line no-console
         console.log(files);
+        // eslint-disable-next-line no-console
         console.log(fs.readdir(path.join(__dirname)));
 
         files
