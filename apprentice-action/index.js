@@ -14,11 +14,6 @@ const fail = (message) => {
         const testDir = "tests/";
         const files = await fs.readdir(path.join(__dirname, testDir));
 
-        // eslint-disable-next-line no-console
-        console.log(files);
-        // eslint-disable-next-line no-console
-        console.log(await fs.readdir(__dirname));
-
         files
             .filter((file) => path.extname(file) === ".js")
             .forEach((file) => {
