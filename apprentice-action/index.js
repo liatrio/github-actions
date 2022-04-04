@@ -22,7 +22,7 @@ const fail = (message) => {
         files
             .filter((file) => path.extname(file) === ".js")
             .forEach((file) => {
-                mocha.addFile(path.join(testDir, file));
+                mocha.addFile(path.join(__dirname, testDir, file));
             });
 
         mocha.run((failures) => {

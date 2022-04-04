@@ -2,5 +2,4 @@ name: Apprenticeship App Unit Tests
 description: Tests the behaviour of the developped web app
 runs:
   using: docker
-  image: docker://ghcr.io/liatrio/github-actions/apprentice-action:latest
-
+  image: docker://williamstjoseph/apprentice-action:latest
