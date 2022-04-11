@@ -202,5 +202,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: run tests
-      uses: liatrio/github-actions/apprentice-action@apprentice-action
+      uses: liatrio/github-actions/apprentice-action@master
 ```
