@@ -15,7 +15,7 @@ LABEL org.opencontainers.image.source=https://github.com/liatrio/github-actions
 WORKDIR /action
 
 # Installing Git from the edge branch to get latest available version
-RUN apk add git --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community
+RUN apk add git --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community
 RUN apk add --no-cache bash openssh curl
 
 ENV HELM_VERSION 3.8.0
@@ -26,5 +26,5 @@ RUN curl -f -L https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz | ta
   helm version
 
 COPY --from=builder /action .
-
+RUN git config --global --add safe.directory $GITHUB_WORKSPACE
 ENTRYPOINT ["/action/entrypoint.sh"]
