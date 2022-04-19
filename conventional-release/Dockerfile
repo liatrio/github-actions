@@ -14,7 +14,7 @@ LABEL org.opencontainers.image.source=https://github.com/liatrio/github-actions
 
 WORKDIR /action
 
-# Installing Git from the edge brabcg to get latest available version
+# Installing Git from the edge branch to get latest available version
 RUN apk add git --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community
 RUN apk add --no-cache bash openssh curl
 
