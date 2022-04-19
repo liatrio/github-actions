@@ -19,7 +19,7 @@ fi
 previousVersion=$(git describe --tags --abbrev=0)
 output "previousVersion" "${previousVersion}"
 
-git config --global --add safe.directory "${GITHUB_WORKSPACE}"
+git config --global --add safe.directory $GITHUB_WORKSPACE
 /action/node_modules/semantic-release/bin/semantic-release.js "${flags[@]}"
 
 newVersion=$(git describe --tags --abbrev=0)
