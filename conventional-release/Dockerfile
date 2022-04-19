@@ -26,5 +26,5 @@ RUN curl -f -L https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz | ta
   helm version
 
 COPY --from=builder /action .
-
+RUN git config --global --add safe.directory "${GITHUB_WORKSPACE}"
 ENTRYPOINT ["/action/entrypoint.sh"]
