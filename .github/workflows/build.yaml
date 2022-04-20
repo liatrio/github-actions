@@ -6,7 +6,6 @@ on:
       - master
     paths:
       - 'apprentice-action/**'
-      - 'conventional-release/**'
       - 'conventional-pr-title/**'
       - '.github/workflows/build.yaml'
 
@@ -15,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        action: ['conventional-release', 'conventional-pr-title', 'apprentice-action']
+        action: ['conventional-pr-title', 'apprentice-action']
     steps:
       - name: Checkout
         uses: actions/checkout@v2
