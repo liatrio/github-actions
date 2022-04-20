@@ -10,8 +10,19 @@ inputs:
     required: false
     default: ""
 runs:
-  using: docker
-  image: docker://ghcr.io/liatrio/github-actions/conventional-release:latest
-  env:
-    DEBUG: ${{ inputs.debug }}
-    DRY_RUN: ${{ inputs.dryRun }}
+  using: "composite"
+  steps:
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+    - uses: azure/setup-helm@v1
+      with:
+        version: '3.8.0'
+    - run: yarn install --production
+      shell: bash
+    - run: $GITHUB_ACTION_PATH/entrypoint.sh
+      shell: bash
+      env:
+        DEBUG: ${{ inputs.debug }}
+        DRY_RUN: ${{ inputs.dryRun }
+        
