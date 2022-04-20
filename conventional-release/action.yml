@@ -18,7 +18,7 @@ runs:
     - uses: azure/setup-helm@v1
       with:
         version: '3.8.0'
-    - run: yarn install --production
+    - run: cd $GITHUB_ACTION_PATH && yarn install --production
       shell: bash
     - run: $GITHUB_ACTION_PATH/entrypoint.sh
       shell: bash
