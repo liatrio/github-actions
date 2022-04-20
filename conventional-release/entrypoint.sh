@@ -19,7 +19,7 @@ fi
 previousVersion=$(git describe --tags --abbrev=0)
 output "previousVersion" "${previousVersion}"
 
-/action/node_modules/semantic-release/bin/semantic-release.js "${flags[@]}"
+$GITHUB_ACTION_PATH/node_modules/semantic-release/bin/semantic-release.js "${flags[@]}"
 
 newVersion=$(git describe --tags --abbrev=0)
 output "newVersion" "${newVersion}"
