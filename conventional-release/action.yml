@@ -9,6 +9,9 @@ inputs:
     description: "Controls if semantic-release performs the release"
     required: false
     default: ""
+outputs:
+  newVersion:
+    description: "The new version tag outputted by Semantic Release"
 runs:
   using: "composite"
   steps:
