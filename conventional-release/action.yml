@@ -28,4 +28,3 @@ runs:
       env:
         DEBUG: ${{ inputs.debug }}
         DRY_RUN: ${{ inputs.dryRun }}
-        
