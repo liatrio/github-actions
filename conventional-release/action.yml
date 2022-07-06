@@ -12,6 +12,7 @@ inputs:
 outputs:
   newVersion:
     description: "The new version tag outputted by Semantic Release"
+    value: ${{ steps.entrypoint.outputs.newVersion }}
 runs:
   using: "composite"
   steps:
@@ -24,6 +25,7 @@ runs:
     - run: cd $GITHUB_ACTION_PATH && yarn install --production
       shell: bash
     - run: $GITHUB_ACTION_PATH/entrypoint.sh
+      id: entrypoint
       shell: bash
       env:
         DEBUG: ${{ inputs.debug }}
