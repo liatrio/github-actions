@@ -13,6 +13,9 @@ outputs:
   newVersion:
     description: "The new version tag outputted by Semantic Release"
     value: ${{ steps.entrypoint.outputs.newVersion }}
+  changed:
+    description: "A bool stating if there is a new release or not."
+    value: ${{ steps.entrypoint.outputs.changed }}
 runs:
   using: "composite"
   steps:
