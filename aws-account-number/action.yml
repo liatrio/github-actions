@@ -1,0 +1,31 @@
+name: AWS Account Number
+description: Retrieves an aws account number from a json file
+inputs:
+  accounts-file:
+    description: A json file with the aws accounts
+    required: true
+  account-name:
+    description: The name of the specific account to use
+    required: true
+  account-name-label:
+    description: "The key name for the account name"
+    required: false
+    default: name
+  account-id-label:
+    description: "The key name for the account id"
+    required: false
+    default: account
+outputs:
+  environments-to-run:
+    description: A list of environments that will have plan / apply executed on. This will be a JSON formatted array.
+    value: ${{ steps.account-number.outputs.number }}
+runs:
+  using: composite
+  steps:
+    - name: Get AWS Account Number
+      shell: bash
+      id: account-number
+      run: |
+        output="$(cat ${{ inputs.accounts-file }} | jq -rc '.[] | select(.${{ inputs.account-name-label }} == "${{ inputs.account-name }}") | .${{ inputs.account-id-label }}')"
+        echo "number=$output"
+        echo "number=$output" >> $GITHUB_OUTPUT
