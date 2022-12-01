@@ -1,9 +1,9 @@
 name: Github Download Release
 description: Downloads the specified release using gh client
 inputs:
-  github-token:
-    description: The authorization token for the target repo
-    required: true
+  # github-token:
+  #   description: The authorization token for the target repo
+  #   required: true
   gh-version:
     description: The gh cli version
     required: false
@@ -48,7 +48,7 @@ runs:
       shell: bash
       id: download-tarball
       env:
-        GITHUB_TOKEN: ${{ inputs.github-token }}
+        # GITHUB_TOKEN: ${{ inputs.github-token }}
         GITHUB_REPO: ${{ inputs.repo }}
         GITHUB_REPO_OWNER: ${{ inputs.owner }}
         RELEASE_NAME: ${{ inputs.release }}
