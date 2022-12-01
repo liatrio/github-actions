@@ -1,11 +1,11 @@
 name: Github Download Release
 description: Downloads the specified release using gh client
 inputs:
-  token:
+  github-token:
     description: The authorization token for the target repo
     required: true
-  github-version:
-    description: Github version
+  gh-version:
+    description: The gh cli version
     required: false
     default: 'v2.0.0'
   owner:
@@ -31,7 +31,7 @@ runs:
     - name: Download github cli
       shell: bash
       env:
-        GH_VERSION: ${{ inputs.github-version }}
+        GH_VERSION: ${{ inputs.gh-version }}
         DOWNLOAD_FORMAT_EXT: ${{ inputs.format-ext }}
       run: |
         export GH_TAG=$(echo "${GH_VERSION}" | sed s/^v//g)
@@ -48,7 +48,7 @@ runs:
       shell: bash
       id: download-tarball
       env:
-        GITHUB_TOKEN: ${{ inputs.token }}
+        GITHUB_TOKEN: ${{ inputs.github-token }}
         GITHUB_REPO: ${{ inputs.repo }}
         GITHUB_REPO_OWNER: ${{ inputs.owner }}
         RELEASE_NAME: ${{ inputs.release }}

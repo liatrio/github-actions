@@ -20,12 +20,11 @@ runs:
 
     - name: Terraform Compliance setup
       shell: bash
+      working-directory: ${{ inputs.target-folder }}
       env:
-        TARGET_FOLDER: ${{ inputs.target-folder }}
         SUBFOLDERS: ${{ inputs.subfolders }}
         TERRAGRUNT_IAM_ROLE: ${{ inputs.iam-role }}
       run: |
-        cd $TARGET_FOLDER
         for i in $SUBFOLDERS
         do
           cd $i/
@@ -36,11 +35,11 @@ runs:
 
     - name: Terraform Compliance
       shell: bash
+      working-directory: ${{ inputs.target-folder }}
       env:
         TARGET_FOLDER: ${{ inputs.target-folder }}
         SUBFOLDERS: ${{ inputs.subfolders }}
       run: |
-        cd $TARGET_FOLDER
         for i in $SUBFOLDERS
         do
           ii="${TARGET_FOLDER}/${i}"
