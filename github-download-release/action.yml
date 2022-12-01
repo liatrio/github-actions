@@ -1,0 +1,62 @@
+name: Github Download Release
+description: Downloads the specified release using gh client
+inputs:
+  token:
+    description: The authorization token for the target repo
+    required: true
+  github-version:
+    description: Github version
+    required: false
+    default: 'v2.0.0'
+  owner:
+    description: The repo owner
+    required: true
+  repo:
+    description: The repo name
+    required: true
+  release:
+    description: The release tag or number
+    required: true
+  format-ext:
+    description: The type of archive
+    required: false
+    default: linux_amd64.tar.gz
+outputs:
+  filename:
+    description: The name of the downloaded tarball
+    value: ${{ steps.download-tarball.outputs.filename }}
+runs:
+  using: composite
+  steps:
+    - name: Download github cli
+      shell: bash
+      env:
+        GH_VERSION: ${{ inputs.github-version }}
+        DOWNLOAD_FORMAT_EXT: ${{ inputs.format-ext }}
+      run: |
+        export GH_TAG=$(echo "${GH_VERSION}" | sed s/^v//g)
+        export DOWNLOAD_URL="https://github.com/cli/cli/releases/download/${GH_VERSION}/gh_${GH_TAG}_${DOWNLOAD_FORMAT_EXT}"
+        printf "Downloading '%s' ...\n" "${DOWNLOAD_URL}"
+        curl -LO "${DOWNLOAD_URL}"
+        export FILENAME="gh_${GH_TAG}_${DOWNLOAD_FORMAT_EXT}"
+        printf "Extracting '%s' ...\n" "${FILENAME}"
+        tar -xzvf "${FILENAME}"
+        export ARCH=$(echo $DOWNLOAD_FORMAT_EXT | awk -F'.' '{ print $1 }')
+        mv gh_${GH_TAG}_${ARCH}/bin/gh ./
+
+    - name: Download Tarball
+      shell: bash
+      id: download-tarball
+      env:
+        GITHUB_TOKEN: ${{ inputs.token }}
+        GITHUB_REPO: ${{ inputs.repo }}
+        GITHUB_REPO_OWNER: ${{ inputs.owner }}
+        RELEASE_NAME: ${{ inputs.release }}
+        DOWNLOAD_FORMAT_EXT: ${{ inputs.format-ext }}
+      run: |
+        export RELEASE_TAG=$(echo "${RELEASE_NAME}" | sed s/^v//g)
+        printf "Downloading release '%s' from repo '%s' ...\n" "${RELEASE_NAME}" "${GITHUB_REPO_OWNER}/${GITHUB_REPO}"
+        ./gh release download --repo "${GITHUB_REPO_OWNER}/${GITHUB_REPO}" "${RELEASE_NAME}" -p "${GITHUB_REPO}_${RELEASE_TAG}_${DOWNLOAD_FORMAT_EXT}"
+        
+        output="${GITHUB_REPO}_${RELEASE_TAG}_${DOWNLOAD_FORMAT_EXT}"
+        echo "filename=${output}" >> $GITHUB_OUTPUT
