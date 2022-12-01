@@ -1,0 +1,38 @@
+name: Discover Changed Targets
+description: Discovers a list of targets to execute plan/apply on
+inputs:
+  targets:
+    description: A list of target folders to check when determining what to run plan/apply on. This should be a newline-delimited string of targets.
+    required: true
+outputs:
+  changed-targets:
+    description: A list of targets that will have plan / apply executed on. This will be a JSON formatted array.
+    value: ${{ steps.set-matrix.outputs.matrix }}
+runs:
+  using: composite
+  steps:
+    - name: Get Changed Files
+      id: files
+      uses: tj-actions/changed-files@v34
+      with:
+        files: ${{ inputs.targets }}
+
+    # given a list of files, output all of the targets that we need to plan against as JSON
+    # example output: ["liatrio-sandbox", "liatrio-non-prod"]
+    - name: List Changed Files
+      id: set-matrix
+      shell: bash
+      run: |
+        envs=()
+
+        files="${{ steps.files.outputs.all_modified_files }}"
+
+        if [ ! -z "$files" ]; then
+          for file in $files[@]; do
+            envs+=($(echo $file | cut -d'/' -f2))
+          done
+        fi
+
+        output="$(echo "${envs[@]}" | tr ' ' '\n' | sort -u | xargs echo -n | jq -R -s -c 'split(" ")')"
+        echo "matrix=${output}"        
+        echo "matrix=${output}" >> $GITHUB_OUTPUT
