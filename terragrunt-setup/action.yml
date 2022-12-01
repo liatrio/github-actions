@@ -5,30 +5,45 @@ inputs:
     description: The terragrunt version to use
     required: false
     default: 'v0.31.1'
-  bin-name:
+  terragrunt-bin-name:
     description: The name of the executable
     required: false
     default: terragrunt
-  bin-dir:
+  terragrunt-bin-dir:
     description: The bin location
     required: false
-    default: /usr/local/bin
+    default: ""
   format-ext:
     description: The type of archive
     required: false
     default: linux_amd64
+outputs:
+  terragrunt-bin-path:
+    description: The path of the downloaded terragrunt bin
+    value: ${{ steps.tg-setup.outputs.tgpath }}
 runs:
   using: composite
   steps:
         
     - name: Terrgrunt Setup
       shell: bash
+      id: tg-setup
       env:
         TERRAGRUNT_VERSION: ${{ inputs.terragrunt-version }}
         DOWNLOAD_FORMAT_EXT: ${{ inputs.format-ext }}
+        TERRAGRUNT_BIN_DIR: ${{ inputs.terragrunt-bin-dir }}
+        TERRAGRUNT_BIN_NAME: ${{ inputs.terragrunt-bin-name }}
       run: |
         export DOWNLOAD_URL="https://github.com/gruntwork-io/terragrunt/releases/download/${TERRAGRUNT_VERSION}/terragrunt_${DOWNLOAD_FORMAT_EXT}"
         printf "Downloading '%s' ...\n" "${DOWNLOAD_URL}"
-        curl -f -Lo ${{ inputs.bin-name }} "${DOWNLOAD_URL}"
-        chmod +x ${{ inputs.bin-name }}
-        mv ${{ inputs.bin-name }} ${{ inputs.bin-path }}/${{ inputs.bin-name }}
+        curl -f -Lo ${{ inputs.terragrunt-bin-name }} "${DOWNLOAD_URL}"
+        chmod +x ${{ inputs.terragrunt-bin-name }}
+        tgpath="${TERRAGRUNT_BIN_NAME}"
+        if [ -n "${TERRAGRUNT_BIN_DIR}" -a "${TERRAGRUNT_BIN_DIR}x" != "x" ]; then
+          mv "${TERRAGRUNT_BIN_NAME}" "${TERRAGRUNT_BIN_DIR}/${TERRAGRUNT_BIN_NAME}"
+          tgpath="${TERRAGRUNT_BIN_DIR}/${TERRAGRUNT_BIN_NAME}"
+        fi
+        
+        output=$(realpath "$tgpath")
+        echo "terragrunt-bin-path: ${output}"
+        echo "tgpath=${output}" >> $GITHUB_OUTPUT

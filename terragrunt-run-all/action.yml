@@ -7,14 +7,10 @@ inputs:
   iam-role:
     description: The iam role to assume
     required: true
-  bin-name:
-    description: The name of the executable
+  terragrunt-bin-path:
+    description: The terragrunt bin path
     required: false
-    default: terragrunt
-  bin-path:
-    description: The bin location
-    required: false
-    default: /usr/local/bin
+    default: ./terragrunt
   run-all-action:
     description: The terragrunt command args
     required: true
@@ -31,4 +27,4 @@ runs:
       env:
         TERRAGRUNT_IAM_ROLE: ${{ inputs.iam-role }}
       run: |
-        ${{ inputs.bin-path }}/${{ inputs.bin-name }} run-all ${{ inputs.run-all-action }} --terragrunt-non-interactive --terragrunt-working-dir ${{ inputs.folder }} ${{ inputs.additional-options-args }}
+        ${{ inputs.terragrunt-bin-path }} run-all ${{ inputs.run-all-action }} --terragrunt-non-interactive --terragrunt-working-dir ${{ inputs.folder }} ${{ inputs.additional-options-args }}
