@@ -16,7 +16,7 @@ inputs:
     required: false
     default: account
 outputs:
-  environments-to-run:
+  account-number:
     description: A list of environments that will have plan / apply executed on. This will be a JSON formatted array.
     value: ${{ steps.account-number.outputs.number }}
 runs:
