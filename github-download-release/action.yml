@@ -1,6 +1,9 @@
 name: Github Download Release
 description: Downloads the specified release using curl
 inputs:
+  token:
+    description: "GitHub API token. Used to query for pull request commits."
+    required: true
   owner:
     description: The repo owner
     required: true
@@ -29,6 +32,7 @@ runs:
       shell: bash
       id: download-asset
       env:
+        GH_PAT: ${{ inputs.token }}
         GITHUB_REPO: ${{ inputs.repo }}
         GITHUB_REPO_OWNER: ${{ inputs.owner }}
         RELEASE_NAME: ${{ inputs.release }}
@@ -37,12 +41,12 @@ runs:
       run: |
         function gh_curl_releases() { 
           local base_url="https://${GITHUB_API_URL}"
-          curl -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/vnd.github.v3.raw" -o releases.tmp.json ${base_url}$@
+          curl -H "Authorization: token ${GH_PAT}" -H "Accept: application/vnd.github.v3.raw" -o releases.tmp.json ${base_url}$@
         }
         
         function gh_curl_asset() { 
-          local base_url="https://${GITHUB_TOKEN}:@${GITHUB_API_URL}"
-          curl -sL -H "Authorization: token ${GITHUB_TOKEN}" -H "Accept: application/octet-stream" ${base_url}$@
+          local base_url="https://${GH_PAT}:@${GITHUB_API_URL}"
+          curl -sL -H "Authorization: token ${GH_PAT}" -H "Accept: application/octet-stream" ${base_url}$@
         }
        
         export RELEASE_TAG=$(echo "${RELEASE_NAME}" | sed s/^v//g)
