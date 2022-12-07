@@ -34,23 +34,26 @@ runs:
       run: |
         [ -z "${{ inputs.terragrunt-bin-dir }}" -o "${{ inputs.terragrunt-bin-dir }}x" = "x" ] && TERRAGRUNT_BIN_DIR=$(realpath "./") || export TERRAGRUNT_BIN_DIR=$(realpath "${{ inputs.terragrunt-bin-dir }}")
         export DOWNLOAD_URL="https://github.com/gruntwork-io/terragrunt/releases/download/${TERRAGRUNT_VERSION}/terragrunt_${{ inputs.format-ext }}"
+        tgpath=$(realpath "${TERRAGRUNT_BIN_NAME}")
         printf "Downloading '%s' ...\n" "${DOWNLOAD_URL}"
         curl -f -Lo "${TERRAGRUNT_BIN_NAME}" "${DOWNLOAD_URL}"
         [ -f "${TERRAGRUNT_BIN_NAME}" ] || { printf "Downloaded file '%s' not found. Exiting ...\n" "${TERRAGRUNT_BIN_NAME}" >&2 && exit 1; }
         # TODO
         # Verify checksum of download
         chmod +x "${TERRAGRUNT_BIN_NAME}"
-        export TERRAGRUNT_BIN_DIR=$(realpath "./")
-        if [ ! -d "${{ inputs.terragrunt-bin-dir }}" ]; then
-          printf "Creating directory '%s' ...\n" "${{ inputs.terragrunt-bin-dir }}"
-          mkdir -p "${{ inputs.terragrunt-bin-dir }}" || { printf "Unabled to create '%s'. Exiting ...\n" "${{ inputs.terragrunt-bin-dir }}" >&2 && exit 1; }
+        if [ -n "${{ inputs.terragrunt-bin-dir }}" -a "${{ inputs.terragrunt-bin-dir }}x" != "x" ]; then
+          if [ ! -d "${{ inputs.terragrunt-bin-dir }}" ]; then
+            printf "Creating directory '%s' ...\n" "${{ inputs.terragrunt-bin-dir }}"
+            mkdir -p "${{ inputs.terragrunt-bin-dir }}" || { printf "Unabled to create '%s'. Exiting ...\n" "${{ inputs.terragrunt-bin-dir }}" >&2 && exit 1; }
+          fi
           export TERRAGRUNT_BIN_DIR=$(realpath "${{ inputs.terragrunt-bin-dir }}")
-          
-          printf "Moving '%s' to '%s' ...\n" "$(realpath ${TERRAGRUNT_BIN_NAME})" "${TERRAGRUNT_BIN_DIR}/${TERRAGRUNT_BIN_NAME}"
-          mv "${TERRAGRUNT_BIN_NAME}" "${TERRAGRUNT_BIN_DIR}/"
+          tgpath="${TERRAGRUNT_BIN_DIR}/${TERRAGRUNT_BIN_NAME}"
+          if [ "$(realpath ${TERRAGRUNT_BIN_NAME})" != "$tgpath" ]; then
+            mv "${TERRAGRUNT_BIN_NAME}" "${TERRAGRUNT_BIN_DIR}/"
+            printf "Moving '%s' to '%s' ...\n" "$(realpath ${TERRAGRUNT_BIN_NAME})" "${TERRAGRUNT_BIN_DIR}/${TERRAGRUNT_BIN_NAME}"
+          fi
         fi
-        tgpath="${TERRAGRUNT_BIN_DIR}/${TERRAGRUNT_BIN_NAME}"
-        [ -f "${tgpath}" ] || { printf "Terragrunt path '%s' not found. Exiting ...\n" "${tgpath}" >&2 && exit 1; }
+        [ -f "$tgpath" ] || { printf "Terragrunt path '%s' not found. Exiting ...\n" "${tgpath}" >&2 && exit 1; }
         
         output=$(realpath "$tgpath")
         echo "terragrunt-bin-path: ${output}"
