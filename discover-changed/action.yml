@@ -5,7 +5,7 @@ inputs:
     description: A list of target folders to check when determining what to run plan/apply on. This should be a newline-delimited string of targets.
     required: true
 outputs:
-  changed-targets:
+  matrix:
     description: A list of targets that will have plan / apply executed on. This will be a JSON formatted array.
     value: ${{ steps.set-matrix.outputs.matrix }}
 runs:
