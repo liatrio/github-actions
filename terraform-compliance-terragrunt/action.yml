@@ -27,7 +27,6 @@ inputs:
     required: false
     default: |
       -n
-      -S
 runs:
   using: docker
   image: Dockerfile
