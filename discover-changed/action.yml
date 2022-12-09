@@ -21,16 +21,16 @@ runs:
       id: set-matrix
       shell: bash
       run: |
-        envs=()
-
+        folders=()
         files="${{ steps.files.outputs.all_modified_files }}"
-
+        printf "files: %s\n" "${files}"
+        printf "targets: %s\n" ${targets[@]}
         if [ ! -z "$files" ]; then
           for file in $files[@]; do
-            envs+=($(echo $file | cut -d'/' -f2))
+            folders+=($(echo $file | cut -d'/' -f2))
           done
         fi
 
-        output="$(echo "${envs[@]}" | tr ' ' '\n' | sort -u | xargs echo -n | jq -R -s -c 'split(" ")')"
+        output="$(echo "${folders[@]}" | tr ' ' '\n' | sort -u | xargs echo -n | jq -R -s -c 'split(" ")')"
         echo "matrix=${output}"        
         echo "matrix=${output}" >> $GITHUB_OUTPUT
