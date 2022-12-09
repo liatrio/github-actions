@@ -21,7 +21,7 @@ runs:
         folders=()
         targets=(${{ inputs.targets }})
         printf "filename: %s\n" ${{ inputs.filename }}
-        printf "targets: %s\n" ${targets[@]}
+        printf "targets: %s\n" "${targets[@]}"
         for target in "${targets[@]}"; do
           files=()
           cd $(dirname $target)
