@@ -23,6 +23,7 @@ runs:
       run: |
         folders=()
         files="${{ steps.files.outputs.all_modified_files }}"
+        targets=(${{ inputs.targets }})
         printf "files: %s\n" "${files}"
         printf "targets: %s\n" ${targets[@]}
         if [ ! -z "$files" ]; then
