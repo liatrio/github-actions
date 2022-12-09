@@ -1,12 +1,12 @@
 name: Discover Changed Targets
-description: Discovers a list of targets to execute plan/apply on
+description: Discovers a list of targets
 inputs:
   targets:
-    description: A list of target folders to check when determining what to run plan/apply on. This should be a newline-delimited string of targets.
+    description: A list of target folders to check. This should be a newline-delimited string of targets.
     required: true
 outputs:
   matrix:
-    description: A list of targets that will have plan / apply executed on. This will be a JSON formatted array.
+    description: A list of targets. This will be a JSON formatted array.
     value: ${{ steps.set-matrix.outputs.matrix }}
 runs:
   using: composite
@@ -17,8 +17,6 @@ runs:
       with:
         files: ${{ inputs.targets }}
 
-    # given a list of files, output all of the targets that we need to plan against as JSON
-    # example output: ["liatrio-sandbox", "liatrio-non-prod"]
     - name: List Changed Files
       id: set-matrix
       shell: bash
