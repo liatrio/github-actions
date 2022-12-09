@@ -1,5 +1,5 @@
 name: Git Config With PAT
-description: Git config glab for use with PAT
+description: Git config global for use with PAT
 inputs:
   token:
     description: "GitHub API token. Used to query for pull request commits."

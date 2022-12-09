@@ -1,6 +1,9 @@
 name: AWS Terraform Compliance
 description: Checks terraform complicance with aws
 inputs:
+  token:
+    description: Github api token
+    required: false
   target-folder:
     description: The target folder
     required: true
@@ -11,53 +14,28 @@ inputs:
   iam-role:
     description: The iam role to assume
     required: true
+  plan-file:
+    description: Name of plan file
+    required: false
+    default: plan.out.json
+  features:
+    description: Features dir or repo
+    required: false
+    default: git:https://github.com/terraform-compliance/user-friendly-features.git
+  options:
+    description: Additional command options
+    required: false
+    default: |
+      -n
+      -S
 runs:
-  using: composite
-  steps:
-    - name: List Compliance folder
-      shell: bash
-      working-directory: ${{ inputs.target-folder }}
-      run: |
-        ls -la
-
-    - name: Install Terraform Compliance
-      shell: bash
-      run: |
-        pip install terraform-compliance
-
-    - name: Terraform Compliance setup
-      shell: bash
-      working-directory: ${{ inputs.target-folder }}
-      env:
-        TERRAGRUNT_IAM_ROLE: ${{ inputs.iam-role }}
-        SUBFOLDERS: ${{ inputs.subfolders }}
-      run: |
-        export SUBFOLDERS="${SUBFOLDERS:-.}"
-        for folder in "${SUBFOLDERS[@]}"
-        do
-          pushd $folder
-          terragrunt plan -lock=false --out plan.out
-          terragrunt show -json plan.out > plan.out.json
-          popd
-        done
-
-    - name: Terraform Compliance
-      shell: bash
-      working-directory: ${{ inputs.target-folder }}
-      env:
-        TARGET_FOLDER: ${{ inputs.target-folder }}
-        SUBFOLDERS: ${{ inputs.subfolders }}
-      run: |
-        export SUBFOLDERS="${SUBFOLDERS:-.}"
-        for folder in "${SUBFOLDERS[@]}"
-        do
-          fulldir="${TARGET_FOLDER}/${folder}"
-          echo "##################################################################################################################"
-          echo "TERRAFORM COMPLIANCE PATH ${fulldir}"
-          echo "##################################################################################################################"
-          pushd $folder
-          terraform-compliance -n -p plan.out.json -f git:https://github.com/terraform-compliance/user-friendly-features.git
-          echo "##################################################################################################################"
-          rm plan.out.json
-          popd
-        done
+  using: docker
+  image: Dockerfile
+  env:
+    TARGET_FOLDER: ${{ inputs.target-folder }}
+    SUBFOLDERS: ${{ inputs.subfolders }}
+    TERRAGRUNT_IAM_ROLE: ${{ inputs.iam-role }}
+    GH_PAT: ${{ inputs.token }}
+    COMPLIANCE_COMMAND_OPTS: ${{ inputs.options }}
+    PLAN_FILE: ${{ inputs.plan-file }}
+    COMPLIANCE_FEATURES: ${{ inputs.features }}
