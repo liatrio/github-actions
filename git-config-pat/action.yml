@@ -1,0 +1,15 @@
+name: Git Config With PAT
+description: Git config glab for use with PAT
+inputs:
+  token:
+    description: "GitHub API token. Used to query for pull request commits."
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Git Config For Private Repo
+      shell: bash
+      env:
+        GH_PAT: ${{ inputs.token }}
+      run: |
+        git config --global url."https://${GITHUB_ACTOR}:${GH_PAT}@github.com".insteadOf ssh://git@github.com
