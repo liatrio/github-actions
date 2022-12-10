@@ -17,7 +17,7 @@ inputs:
   plan-file:
     description: Name of plan file
     required: false
-    default: plan.out.json
+    default: plan.out
   features:
     description: Features dir or repo
     required: false

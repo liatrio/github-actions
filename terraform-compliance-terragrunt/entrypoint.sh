@@ -12,8 +12,9 @@ export SUBFOLDERS=($SUBFOLDERS)
 
 # Use $RANDOM to avoid naming collisions
 export RANDOM_PLAN_FILE="${RANDOM}_${PLAN_FILE}"
+export RANDOM_PLAN_FILE_JSON="${RANDOM}_${PLAN_FILE}.json"
 command_opts=(
- -p "${RANDOM_PLAN_FILE}"
+ -p "${RANDOM_PLAN_FILE_JSON}"
  -f "${COMPLIANCE_FEATURES}"
 )
 for param in "${COMPLIANCE_COMMAND_OPTS[@]}"; do command_opts+=($param); done
@@ -31,11 +32,11 @@ for folder in "${SUBFOLDERS[@]}"; do
   echo "##################################################################################################################"
   pushd $folder
   printf "Current Subfolder: %s\n" "$(pwd)"
-  terragrunt plan -lock=false --out plan.out
-  terragrunt show -json plan.out > "${RANDOM_PLAN_FILE}"
+  terragrunt plan -lock=false --out "${RANDOM_PLAN_FILE}"
+  terragrunt show -json "${RANDOM_PLAN_FILE}" > "${RANDOM_PLAN_FILE_JSON}"
   printf "Running '%s' ...\n" "${COMPLIANCE_COMMAND} ${COMPLIANCE_COMMAND_OPTS[@]}"
   ${COMPLIANCE_COMMAND} ${COMPLIANCE_COMMAND_OPTS[@]}
   echo "##################################################################################################################"
-  rm "${RANDOM_PLAN_FILE}"
+  rm "${RANDOM_PLAN_FILE_JSON}"
   popd
 done
