@@ -7,7 +7,7 @@ RUN which terragrunt >> /tmp/alpine_terragrunt_binaries && \
     mkdir -p /custom && \
     for file in $(echo $(cat /tmp/alpine_terragrunt_binaries)); \
     do \
-      cp $file /custom/; \
+      mv $file /custom/; \
     done
 
 FROM eerkunt/terraform-compliance:$TERRAFORM_COMPLIANCE_VERSION
