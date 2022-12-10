@@ -23,7 +23,7 @@ inputs:
     required: false
     default: git:https://github.com/terraform-compliance/user-friendly-features.git
   options:
-    description: Additional command options
+    description: Optional parameters (https://terraform-compliance.com/pages/usage/)
     required: false
     default: |
       -n
