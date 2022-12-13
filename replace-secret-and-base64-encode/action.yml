@@ -8,9 +8,9 @@ inputs:
     description: The name of the specific account to use
     required: true
   replace-key-entropy:
-    description: The number of times $RANDOM should be stitched together
+    description: openssl rand -hex <entropy>
     required: false
-    default: "5"
+    default: "8"
 outputs:
   base64-encoded:
     description: The base64 encoded file with pat replaced
@@ -26,15 +26,9 @@ runs:
       shell: bash
       env:
         FILE_PATH: ${{ inputs.file }}
-        ENTROPY: ${{ inputs.replace-key-entropy }}
       id: encode
       run: |
-        big_random() {
-          local entropy="${1:-5}"; local input="$2"; local output="$input"
-          for i in $(eval echo "{1..$entropy}"); do output="${output}$(echo ${RANDOM})"; done
-          echo "${output}"
-        }
-        big_rand="$(big_random ${ENTROPY})" || { print "There was a problem with the function '%s' ['%s', '%s']. Exiting ...\n" "big_random(FILE_PATH, ENTROPY)" "$FILE_PATH" "$ENTROPY" >&2; exit 1; }
+        big_rand="$(openssl rand -hex ${{ inputs.replace-key-entropy }})" || { print "There was a problem openssl. Exiting ...\n" >&2; exit 1; }
         encoded=$(echo $(cat "${FILE_PATH}" | sed "s/${{ inputs.token }}/${big_rand}/g" | base64))
 
         echo "base64-encoded=$(echo ${encoded})"
