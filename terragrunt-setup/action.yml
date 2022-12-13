@@ -12,7 +12,7 @@ inputs:
   terragrunt-bin-dir:
     description: The bin location
     required: false
-    default: ""
+    default: "/usr/local/bin"
   format-ext:
     description: The type of archive
     required: false

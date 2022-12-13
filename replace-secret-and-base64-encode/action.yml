@@ -1,0 +1,44 @@
+name: Replace Secret and Base64 Encode
+description: Replaces the secret token and base64 encodes to string
+inputs:
+  token:
+    description: The secret token to replace
+    required: true
+  file:
+    description: The name of the specific account to use
+    required: true
+  replace-key-entropy:
+    description: The number of times $RANDOM should be stitched together
+    required: false
+    default: "5"
+outputs:
+  base64-encoded:
+    description: The base64 encoded file with pat replaced
+    value: ${{ steps.encode.outputs.base64-encoded }}
+  replacement-key:
+    description: The pat replacement key
+    value: ${{ steps.encode.outputs.replacement-key }}
+
+runs:
+  using: composite
+  steps:
+    - name: Base64 Encode File
+      shell: bash
+      env:
+        FILE_PATH: ${{ inputs.file }}
+        ENTROPY: ${{ inputs.replace-key-entropy }}
+      id: encode
+      run: |
+        big_random() {
+          local entropy="${1:-5}"; local input="$2"; local output="$input"
+          for i in $(eval echo "{1..$entropy}"); do output="${output}$(echo ${RANDOM})"; done
+          echo "${output}"
+        }
+        big_rand="$(big_random ${ENTROPY})" || { print "There was a problem with the function '%s' ['%s', '%s']. Exiting ...\n" "big_random(FILE_PATH, ENTROPY)" "$FILE_PATH" "$ENTROPY" >&2; exit 1; }
+        encoded=$(echo $(cat "${FILE_PATH}" | sed "s/${{ inputs.token }}/${big_rand}/g" | base64))
+
+        echo "base64-encoded=$(echo ${encoded})"
+        echo "base64-encoded=$(echo ${encoded})" >> $GITHUB_OUTPUT
+
+        echo "replacement-key=${big_rand}"
+        echo "replacement-key=${big_rand}" >> $GITHUB_OUTPUT
