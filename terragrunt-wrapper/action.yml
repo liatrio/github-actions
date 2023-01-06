@@ -1,0 +1,81 @@
+name: Terragrunt Wrapper
+description: Wrapper for terragrunt setup
+inputs:
+  terraform-version:
+    description: The terraform version to use
+    required: false
+    default: v1.3.6
+  terragrunt-version:
+    description: The terragrunt version to use
+    required: false
+    default: v0.31.1
+  terragrunt-wrapper-command:
+    description: tg sub command
+    required: true
+  terragrunt-working-dir:
+    description: tf dir
+    required: false
+  arch:
+    description: The system architecture
+    required: false
+    default: linux_amd64
+outputs:
+  terraform-path:
+    description: The install path to terraform
+    value: ${{ steps.install.outputs.terraform-path }}
+  terragrunt-path:
+    description: The install path to terragrunt
+    value: ${{ steps.install.outputs.terragrunt-path }}
+  planfile:
+    description: The name of the planfile
+    value: ${{ steps.set-planfile.outputs.planfile }}
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      id: init
+      run: |
+        echo "RUN_TIME=`date +'%Y-%m-%d-%M:%S.%N'`" >> $GITHUB_ENV
+        # Attempting to use environment variable as priority value
+        TERRAFORM_VERSION=$(echo ${TERRAFORM_VERSION:-${{inputs.terraform-version}}} | sed s/^[a-z]*//g)
+        TERRAGRUNT_VERSION=$(echo ${TERRAGRUNT_VERSION:-${{inputs.terragrunt-version}}} | sed s/^[a-z]*//g)
+        TERRAFORM_CHECKSUM="${TERRAFORM_CHECKSUM:-${{ github.action_path }}/SHA256SUMS_terraform_${TERRAFORM_VERSION}}"
+        TERRAGRUNT_CHECKSUM="${TERRAGRUNT_CHECKSUM:-${{ github.action_path }}/SHA256SUMS_terragrunt_${TERRAGRUNT_VERSION}}"
+        printf "TERRAFORM_VERSION: %s\n" "$TERRAFORM_VERSION"
+        printf "TERRAGRUNT_VERSION: %s\n" "$TERRAGRUNT_VERSION"
+        printf "TERRAFORM_CHECKSUM: %s\n" "$TERRAFORM_CHECKSUM"
+        printf "TERRAGRUNT_CHECKSUM: %s\n" "$TERRAGRUNT_CHECKSUM"
+        echo "terraform-version=${TERRAFORM_VERSION}" >> $GITHUB_OUTPUT
+        echo "terragrunt-version=${TERRAGRUNT_VERSION}" >> $GITHUB_OUTPUT
+        echo "terraform-checksum=${TERRAFORM_CHECKSUM}" >> $GITHUB_OUTPUT
+        echo "terragrunt-checksum=${TERRAGRUNT_CHECKSUM}" >> $GITHUB_OUTPUT
+
+    - name: Get verify checksum
+      if: inputs.terragrunt-wrapper-command == 'install'
+      uses: ./.github/actions/verify-checksum
+      id: get-verify
+
+    - shell: bash
+      if: inputs.terragrunt-wrapper-command == 'install'
+      id: install
+      env:
+        TERRAFORM_VERSION: ${{ steps.init.outputs.terraform-version }}
+        TERRAGRUNT_VERSION: ${{ steps.init.outputs.terragrunt-version }}
+        ARCH: ${{ inputs.arch }}
+        VERIFY_TOOL: ${{ steps.get-verify.outputs.script-path }}
+        TERRAFORM_CHECKSUM: ${{ steps.init.outputs.terraform-checksum }}
+        TERRAGRUNT_CHECKSUM: ${{ steps.init.outputs.terragrunt-checksum }}
+      run: ${{ github.action_path }}/tg.sh ${{ inputs.terragrunt-wrapper-command }} $(realpath ${TERRAGRUNT_WORKING_DIR:-'.'})
+
+    # - shell: bash
+    #   if: inputs.terragrunt-wrapper-command == 'install'
+    #   uses: ./.github/actions/verify-checksum
+
+    - shell: bash
+      id: set-planfile
+      run: ${{ github.action_path }}/tg.sh planfile
+    
+    - shell: bash
+      if: inputs.terragrunt-wrapper-command != 'install'
+      run: ${{ github.action_path }}/tg.sh ${{ inputs.terragrunt-wrapper-command }} $(realpath ${TERRAGRUNT_WORKING_DIR:-'.'})
