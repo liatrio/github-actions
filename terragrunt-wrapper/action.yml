@@ -53,7 +53,7 @@ runs:
 
     - name: Get verify checksum
       if: inputs.terragrunt-wrapper-command == 'install'
-      uses: ./.github/actions/verify-checksum
+      uses: liatrio/github-actions/verify-checksum@feat/andrews-actions
       id: get-verify
 
     - shell: bash
