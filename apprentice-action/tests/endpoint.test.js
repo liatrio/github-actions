@@ -27,4 +27,9 @@ describe("Tests to the \"/\" endpoint", () => {
         const res = await axios(`http://${dockerBridgeIP}:80/`);
         expect(res.data.timestamp).to.be.a("number");
     });
+
+    it("should return a 404 status code", async () => {
+        const res = await axios(`http://${dockerBridgeIP}:80/`);
+        expect(res.status).to.equal(404);
+    });
 });
