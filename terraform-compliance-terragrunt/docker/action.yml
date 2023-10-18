@@ -1,0 +1,54 @@
+name: AWS Terraform Compliance
+description: Checks terraform complicance with aws
+inputs:
+  token:
+    description: Github api token
+    required: false
+  target-folder:
+    description: The target folder
+    required: true
+  subfolders:
+    description: A space delimited list of sub-folders with terragrunt.hcl files
+    required: false
+    default: ""
+  iam-role:
+    description: The iam role to assume
+    required: true
+  gitconfig-enabled:
+    description: If gitconfig should be enabled
+    required: false
+    default: "false"
+  gitconfig-base64:
+    description: Base64 encoded gitconfig file
+    required: false
+    default: ""
+  gitconfig-base64-key:
+    description: Replace key for pat in gitconfig
+    required: false
+    default: ""
+  planfile:
+    description: Name of plan file
+    required: true
+  features:
+    description: Features dir or repo
+    required: false
+    default: git:https://github.com/terraform-compliance/user-friendly-features.git
+  options:
+    description: Optional parameters (https://terraform-compliance.com/pages/usage/)
+    required: false
+    default: |
+      -n
+runs:
+  using: docker
+  image: Dockerfile
+  env:
+    TARGET_FOLDER: ${{ inputs.target-folder }}
+    SUBFOLDERS: ${{ inputs.subfolders }}
+    TERRAGRUNT_IAM_ROLE: ${{ inputs.iam-role }}
+    GH_PAT: ${{ inputs.token }}
+    COMPLIANCE_COMMAND_OPTS: ${{ inputs.options }}
+    PLAN_FILE: ${{ inputs.planfile }}
+    COMPLIANCE_FEATURES: ${{ inputs.features }}
+    GITCONFIG_BASE64: ${{ inputs.gitconfig-base64 }}
+    GITCONFIG_BASE64_KEY: ${{ inputs.gitconfig-base64-key }}
+    GITCONFIG_ENABLED: ${{ inputs.gitconfig-enabled }}

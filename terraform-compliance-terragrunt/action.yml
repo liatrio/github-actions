@@ -1,0 +1,77 @@
+name: AWS Terraform Compliance
+description: Checks terraform complicance with aws
+inputs:
+  target-folder:
+    description: The target folder
+    required: true
+  subfolders:
+    description: A space delimited list of sub-folders with terragrunt.hcl files
+    required: false
+    default: ""
+  planfile:
+    description: Name of plan file
+    required: true
+  features:
+    description: Features dir or repo
+    required: false
+    default: git:https://github.com/terraform-compliance/user-friendly-features.git
+  options:
+    description: Optional parameters (https://terraform-compliance.com/pages/usage/)
+    required: false
+    default: |
+      -n
+runs:
+  using: composite
+  steps:
+    - name: Install Terraform Compliance
+      shell: bash
+      run: pip install terraform-compliance
+
+    - name: Terraform Compliance
+      id: compliance
+      shell: bash
+      env:
+        TARGET_FOLDER: ${{ inputs.target-folder }}
+        SUBFOLDERS: ${{ inputs.subfolders }}
+        COMPLIANCE_COMMAND_OPTS: ${{ inputs.options }}
+        PLAN_FILE: ${{ inputs.planfile }}
+        COMPLIANCE_FEATURES: ${{ inputs.features }}
+      run: |
+        export TARGET_FOLDER="${TARGET_FOLDER:-.}"
+        export SUBFOLDERS="${SUBFOLDERS:-.}"
+        export SUBFOLDERS=($SUBFOLDERS)
+
+        # Use $RANDOM to avoid naming collisions
+        export RANDOM_PLAN_FILE="${PLAN_FILE}.${RANDOM}"
+        export RANDOM_PLAN_FILE_JSON="${RANDOM_PLAN_FILE}.json"
+        command_opts=(
+         -p "${RANDOM_PLAN_FILE_JSON}"
+         -f "${COMPLIANCE_FEATURES}"
+        )
+        for param in "${COMPLIANCE_COMMAND_OPTS[@]}"; do command_opts+=($param); done
+        export COMPLIANCE_COMMAND_OPTS="${command_opts[@]}"
+        export COMPLIANCE_COMMAND=terraform-compliance
+
+        cd $TARGET_FOLDER
+
+        printf "Current Target: %s\n" "$(pwd)"
+
+        for folder in "${SUBFOLDERS[@]}"; do
+          fulldir="${TARGET_FOLDER}/${folder}"
+          echo "##################################################################################################################"
+          echo "TERRAFORM COMPLIANCE PATH ${fulldir}"
+          echo "##################################################################################################################"
+          pushd $folder
+          printf "Current Subfolder: %s\n" "$(pwd)"
+          ls -l
+          [ -f "${PLAN_FILE}" ] || terragrunt plan -lock=false --out "${PLAN_FILE}"
+          printf "Renaming '%s' to '%s' ...\n" "${PLAN_FILE}" "${RANDOM_PLAN_FILE}"
+          mv "${PLAN_FILE}" "${RANDOM_PLAN_FILE}"
+          printf "Creating json planfile '%s' ...\n" "${RANDOM_PLAN_FILE_JSON}"
+          terragrunt show -json "${RANDOM_PLAN_FILE}" > "${RANDOM_PLAN_FILE_JSON}"
+          printf "Running '%s' ...\n" "${COMPLIANCE_COMMAND} ${COMPLIANCE_COMMAND_OPTS[@]}"
+          ${COMPLIANCE_COMMAND} ${COMPLIANCE_COMMAND_OPTS[@]}
+          echo "##################################################################################################################"
+          rm "${RANDOM_PLAN_FILE_JSON}"
+          popd
+        done

@@ -1,0 +1,23 @@
+name: Git Config With PAT
+description: Git config global for use with PAT
+inputs:
+  token:
+    description: "GitHub API token. Used to query for pull request commits."
+    required: true
+outputs:
+  gitconfig:
+    description: The path to the .gitconfig file being configured
+    value: ${{ steps.git-config.outputs.gitconfig }}
+runs:
+  using: composite
+  steps:
+    - name: Git Config For Private Repo
+      shell: bash
+      id: git-config
+      env:
+        GH_PAT: ${{ inputs.token }}
+      run: |
+        git config --global url."https://${GITHUB_ACTOR}:${GH_PAT}@github.com".insteadOf ssh://git@github.com
+
+        echo "gitconfig=${HOME}/.gitconfig"
+        echo "gitconfig=${HOME}/.gitconfig" >> $GITHUB_OUTPUT

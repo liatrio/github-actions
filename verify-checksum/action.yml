@@ -1,0 +1,43 @@
+name: Verify Checksum
+description: Checksum verification utility
+inputs:
+  script-path:
+    description: target path
+    default: ${{ github.workspace }}/verify.sh
+
+#   filename:
+#     description: The file to verify
+#     required: true
+#   checksum:
+#     description: The value or file containing the expected checksum
+#     required: true
+#   command:
+#     description: The checksum verification command to run
+#     required: false
+#     default: sha256sum
+
+outputs:
+  script-path:
+    description: The verify script path
+    value: ${{ steps.set-output.outputs.script-path }}
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: |
+        echo "RUN_TIME=`date +'%Y-%m-%d-%M:%S.%N'`" >> $GITHUB_ENV
+
+    - shell: bash
+      run: |
+        cat > ${{ inputs.script-path }} < ${{ github.action_path }}/verify.sh
+        chmod +x ${{ inputs.script-path }}
+#        ${{ github.action_path }}/verify.sh ${{ inputs.filename }} ${{ inputs.checksum }} ${{ intpus.command }}
+
+    - shell: bash
+      id: set-output
+      env:
+        SCRIPT_PATH: ${{ inputs.script-path }}
+      run: |
+        echo "script-path=${SCRIPT_PATH}"
+        echo "script-path=${SCRIPT_PATH}" >> $GITHUB_OUTPUT

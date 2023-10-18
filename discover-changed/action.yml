@@ -1,0 +1,37 @@
+name: Discover Changed Targets
+description: Discovers a list of targets
+inputs:
+  targets:
+    description: A list of target folders to check. This should be a newline-delimited string of targets.
+    required: true
+outputs:
+  matrix:
+    description: A list of targets. This will be a JSON formatted array.
+    value: ${{ steps.set-matrix.outputs.matrix }}
+runs:
+  using: composite
+  steps:
+    - name: Get Changed Files
+      id: files
+      uses: tj-actions/changed-files@v34
+      with:
+        files: ${{ inputs.targets }}
+
+    - name: List Changed Files
+      id: set-matrix
+      shell: bash
+      run: |
+        folders=()
+        files="${{ steps.files.outputs.all_modified_files }}"
+        targets=(${{ inputs.targets }})
+        printf "files: %s\n" "${files}"
+        printf "targets: %s\n" "${targets[@]}"
+        if [ ! -z "$files" ]; then
+          for file in $files[@]; do
+            folders+=($(echo $file | cut -d'/' -f2))
+          done
+        fi
+
+        output="$(echo "${folders[@]}" | tr ' ' '\n' | sort -u | xargs echo -n | jq -R -s -c 'split(" ")')"
+        echo "matrix=${output}"        
+        echo "matrix=${output}" >> $GITHUB_OUTPUT
