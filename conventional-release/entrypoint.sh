@@ -18,10 +18,10 @@ fi
 
 #Check to see if a previous tag exists
 if previousVersion=$(git describe --tags --abbrev=0 2>/dev/null); then
-  echo "A previos tag was found"
+  echo "A previous tag was found"
   output "previousVersion" "${previousVersion}"
 else
-  echo "A previos tag was not found"
+  echo "A previous tag was not found"
 fi
 
 $GITHUB_ACTION_PATH/node_modules/semantic-release/bin/semantic-release.js "${flags[@]}"
