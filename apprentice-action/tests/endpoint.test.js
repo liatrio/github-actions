@@ -27,4 +27,10 @@ describe("Tests to the \"/\" endpoint", () => {
         const res = await axios(`http://${dockerBridgeIP}:80/`);
         expect(res.data.timestamp).to.be.a("number");
     });
+    it("timestamp should be within a few seconds of now", async () => {
+        const res = await axios(`http://${dockerBridgeIP}:80/`);
+        // Check if the timestamp is within 5 seconds of the current time
+        const now = Math.floor(Date.now() / 1000);
+        expect(res.data.timestamp).to.be.within(now - 5, now);
+    });
 });
