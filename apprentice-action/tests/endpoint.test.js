@@ -27,4 +27,9 @@ describe("Tests to the \"/\" endpoint", () => {
         const res = await axios(`http://${dockerBridgeIP}:80/`);
         expect(res.data.timestamp).to.be.a("number");
     });
+    it("should return a timestamp within a few seconds of now", async () => {
+        const res = await axios(`http://${dockerBridgeIP}:80/`);
+        const now = Date.now();
+        expect(res.data.timestamp).to.be.within(now - 5000, now);
+    });
 });
