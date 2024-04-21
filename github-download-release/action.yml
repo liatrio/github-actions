@@ -1,0 +1,87 @@
+name: Github Download Release
+description: Downloads the specified release using curl
+inputs:
+  token:
+    description: "GitHub API token. Used to query for pull request commits."
+    required: true
+  owner:
+    description: The repo owner
+    required: true
+  repo:
+    description: The repo name
+    required: true
+  release:
+    description: The release tag or number
+    required: true
+  format-ext:
+    description: The type of archive
+    required: false
+    default: linux_amd64.tar.gz
+  file:
+    description: The explicit filename to use ... format-ext will be ignored.
+    required: false
+outputs:
+  filename:
+    description: The name of the downloaded tarball
+    value: ${{ steps.download-asset.outputs.filename }}
+runs:
+  using: composite
+  steps:
+
+    - name: CURL Download Asset
+      shell: bash
+      id: download-asset
+      env:
+        GH_PAT: ${{ inputs.token }}
+        GITHUB_REPO: ${{ inputs.repo }}
+        GITHUB_REPO_OWNER: ${{ inputs.owner }}
+        RELEASE_NAME: ${{ inputs.release }}
+        DOWNLOAD_FORMAT_EXT: ${{ inputs.format-ext }}
+        FILE: ${{ inputs.file }}
+      run: |
+        function gh_curl_releases() { 
+          local base_url="https://${GITHUB_API_URL}"
+          curl -H "Authorization: token ${GH_PAT}" -H "Accept: application/vnd.github.v3.raw" -o releases.tmp.json ${base_url}$@
+        }
+        
+        function gh_curl_asset() { 
+          local base_url="https://${GH_PAT}:@${GITHUB_API_URL}"
+          curl -sL -H "Authorization: token ${GH_PAT}" -H "Accept: application/octet-stream" ${base_url}$@
+        }
+       
+        export RELEASE_TAG=$(echo "${RELEASE_NAME}" | sed s/^v//g)
+        export REPO="${GITHUB_REPO_OWNER}/${GITHUB_REPO}"
+        export FILE_DEFAULT="${GITHUB_REPO}_${RELEASE_TAG}_${DOWNLOAD_FORMAT_EXT}"
+        [ -z "$FILE" -o "${FILE}x" = "x" ] && export FILE="$FILE_DEFAULT"
+                        
+        if [ "$RELEASE_NAME" = "latest" ]; then
+          # Github should return the latest release first.
+          JQ_PARSER_ASSET_ID=".[0].assets | map(select(.name == \"$FILE\"))[0].id"
+        else
+          JQ_PARSER_ASSET_ID=". | map(select(.tag_name == \"$RELEASE_NAME\"))[0].assets | map(select(.name == \"$FILE\"))[0].id"
+        fi
+        
+        printf "Getting asset id from '%s' ...\n" "https://${GITHUB_API_URL}/repos/${REPO}/releases"
+        gh_curl_releases "/repos/${REPO}/releases"
+        ASSET_ID=$(cat releases.tmp.json | jq "$JQ_PARSER_ASSET_ID")
+        if [ -z "$ASSET_ID" -o "$ASSET_ID" = "null" ]; then
+          echo "ERROR: version not found $RELEASE_NAME" >&2
+          exit 1
+        fi
+
+        printf "Getting asset '%s' ...\n" "$ASSET_ID"
+        URL_BASE_PATH="/repos/${REPO}/releases"
+        gh_curl_asset "/repos/${REPO}/releases/assets/${ASSET_ID}" > $FILE
+        
+        ls -lah $FILE
+        
+        echo "filename=${FILE}"
+        echo "filename=${FILE}" >> $GITHUB_OUTPUT
+        
+        ASSET_URL="https://${GITHUB_API_URL}/repos/${REPO}/releases/assets/${ASSET_ID}"
+        echo "asset=${ASSET_URL}"
+        echo "asset=${ASSET_URL}" >> $GITHUB_OUTPUT
+        
+        WEB_URL="https://github.com/${REPO}/releases/download/${RELEASE_NAME}/${FILE}"
+        echo "web=${WEB_URL}"
+        echo "web=${WEB_URL}" >> $GITHUB_OUTPUT

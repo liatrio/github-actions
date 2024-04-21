@@ -1,0 +1,35 @@
+name: Discover Filenames Targets
+description: Discovers a list of targets
+inputs:
+  targets:
+    description: A list of target folders to check. This should be a newline-delimited string of targets.
+    required: true
+  filename:
+    description: The filename to discover
+    required: true
+outputs:
+  matrix:
+    description: A list of targets. This will be a JSON formatted array.
+    value: ${{ steps.set-matrix.outputs.matrix }}
+runs:
+  using: composite
+  steps:
+    - name: Set Matrix
+      id: set-matrix
+      shell: bash
+      run: |
+        folders=()
+        targets=(${{ inputs.targets }})
+        printf "filename: %s\n" ${{ inputs.filename }}
+        printf "targets: %s\n" "${targets[@]}"
+        for target in "${targets[@]}"; do
+          files=()
+          cd $(dirname $target)
+          for file in $(find $(basename $target) -mindepth 1 -name ${{ inputs.filename }}); do 
+            folders+=($(dirname $file))
+          done
+        done
+
+        output="$(echo "${folders[@]}" | tr ' ' '\n' | sort -u | xargs echo -n | jq -R -s -c 'split(" ")')"
+        echo "matrix=${output}"
+        echo "matrix=${output}" >> $GITHUB_OUTPUT
