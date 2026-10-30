@@ -10,3 +10,4 @@ runs:
     shell: bash
   - run: node $GITHUB_ACTION_PATH/index.js
     shell: bash
+  - uses: liatrio/apprentice-tests@main
