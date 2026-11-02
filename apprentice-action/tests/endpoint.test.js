@@ -32,4 +32,10 @@ describe("Tests to the \"/\" endpoint", () => {
         const now = Date.now();
         expect(res.data.timestamp).to.be.within(now - 5000, now);
     });
+
+    it("should return a JSON content type", async () => {
+        const res = await axios(`http://${dockerBridgeIP}:80/`);
+        expect(res.headers["content-type"]).to.contain("application/json");
+        expect(true).to.equal(false); // WIP - remove before pushing
+    });
 });
